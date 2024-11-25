@@ -1,0 +1,2 @@
+[build]
+  functions = "functions" # Specify the directory for functions
