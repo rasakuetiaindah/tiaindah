@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="robots" content="noindex, nofollow">
+    <title>Dashboard <%= websiteData?.website?.name %> </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
+  
+
+    <style>
+        *{
+            font-size: 11px;
+        }
+        .is-invalid {
+            border-color: red; /* Mengubah warna border menjadi merah */
+        }
+        .invalid-feedback {
+            display: none; /* Sembunyikan feedback secara default */
+        }
+        .is-invalid + .invalid-feedback {
+            display: block; /* Tampilkan feedback jika input invalid */
+        }
+        .custom-select:hover {
+            background-color: none !important;
+            border-color: #007bff !important; /* Mengubah border saat hover */
+            
+        }
+        .border-custom{
+    
+            border-color: darkgray;
+        }
+        .transparent-dark-hover:hover {
+            background-color: rgba(0, 0, 0, 0.5); /* Warna latar belakang gelap transparan saat hover */
+            transform: scale(1.05); /* Efek zoom saat hover */
+        }
+        /* .alert {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+        */
+    </style>
+</head>
+<body class="container mt-3 d-flex justify-content-center">
+   <div style="max-width: 526px;">
+    <div class="container d-flex">
+       <% if (!websiteData) { %>
+        <div>
+            <p class="text-warning bg-secondary">Silahkan Buat Website anda Terlebih dahulu !</p>
+        <button type="button" class="btn btn-outline-danger rounded-0 me-1" data-bs-toggle="modal" data-bs-target="#createweb">
+            Create Website <i class="bi bi-plus-lg"></i>
+          </button>
+        </div>
+        <% } %>
+         <% if(!websiteData) {%>
+            <div></div>
+        <% } else { %>
+            <button type="button" class="btn btn-outline-danger rounded-0 me-1" data-bs-toggle="modal" data-bs-target="#editweb">
+                Edit Website <i class="bi bi-pencil-fill "></i>
+              </button>
+              <button type="button" class="btn btn-outline-danger rounded-0 me-1" data-bs-toggle="modal" data-bs-target="#productsadd">
+                Add New Product <i class="bi bi-plus-lg"></i>
+              </button>
+              <button type="button" class="btn btn-outline-danger rounded-0 me-1" data-bs-toggle="modal" data-bs-target="#akunseting">
+                Akun <i class="bi bi-gear"></i>
+              </button>
+            <% } %> 
+    </div>
+    <hr style="border-top: 2px solid #000; border-bottom: none; border-left: none; border-right: none;">
+     <!-- CREATE NEW WEB -->
+     <div class="container">
+      
+          <div class="modal fade" id="createweb" tabindex="-1" aria-labelledby="createweb-Label" aria-hidden="true" >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header p-1 ps-2 pe-2"  >
+                  <h5 class="modal-title fs-6 " id="createweb-Label">Create New Web</h5>
+                  <button type="button" class="btn btn-sm border-danger bg-trasparant rounded-0"  data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg text-danger"></i></button>
+                </div>
+                <div class="modal-body d-flex justify-content-center"  >
+    
+                    <form class="form-submit" data-url="/" enctype="multipart/form-data"   style="max-width: 726px;">
+                        <div class="mb-3">
+
+                            <label for="inputWarna" class="form-label">Pilih Warna web:</label>
+                            <div class="d-flex">
+                                <div class="dropdown">
+                                <button class="btn  border-custom dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Pilih Warna
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li><a class="dropdown-item" href="#" data-value="merah" data-val="#a40009">Merah <i class="bi bi-circle-fill ms-1" style="color:#a40009;"></i></a></li>
+                                    <li><a class="dropdown-item"  href="#" data-value="dark" data-val="#000000">dark <i class="bi bi-circle-fill ms-1" style="color:#000000;"></i></a></li>
+                                    <li><a class="dropdown-item"  href="#" data-value="orange" data-val="#f04905">orange <i class="bi bi-circle-fill ms-1" style="color:#f04905;"></i></a></li>
+                                    <li><a class="dropdown-item"  href="#" data-value="pink" data-val="#eeb1a8">pink <i class="bi bi-circle-fill ms-1" style="color:#eeb1a8;"></i></a></li>
+                                    <li><a class="dropdown-item"  href="#" data-value="blue" data-val="#0c0b97">blue <i class="bi bi-circle-fill ms-1" style="color:#0c0b97;"></i></a></li>
+                                    <li><a class="dropdown-item"  href="#" data-value="green" data-val="#3a9b7c" >green <i class="bi bi-circle-fill ms-1" style="color:#3a9b7c;"></i></a></li>
+                                    <li><a class="dropdown-item"  href="#" data-value="coklat"data-val="#7d4a2c">coklat <i class="bi bi-circle-fill ms-1" style="color:#7d4a2c;"></i></a></li>
+                                    <li><a class="dropdown-item"  href="#" data-value="ungu" data-val="#dca8f1">ungu <i class="bi bi-circle-fill ms-1" style="color:#dca8f1;"></i></a></li>
+                                    <li><a class="dropdown-item"  href="#" data-value="gold" data-val="#f2b901">gold <i class="bi bi-circle-fill ms-1" style="color:#f2b901;"></i></a></li>
+
+                                </ul>
+                            </div>
+
+                            <input type="color" class="border-custom ms-2 inputWarna" id="inputWarna1"  name="colorWeb" value="#26c0b4" />
+                        </div>
+                            
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Website Name:</label>
+                            <input type="text" class="form-control form-control-sm border-custom rounded-0" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="imageLogo" class="form-label">Logo:</label>
+                            <input type="file" class="form-control form-control-sm border-custom rounded-0" name="imageLogo" accept="image/*" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="imageHeader" class="form-label">Header Image:</label>
+                            <input type="file" class="form-control form-control-sm border-custom rounded-0" name="imageHeader" accept="image/*" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descriptionCta" class="form-label">Description header Cta:</label>
+                            <input type="text" class="form-control form-control-sm border-custom rounded-0" name="descriptionCta" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="fw-bold">service 1</div>
+                            <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="service1Label" placeholder="label" required>
+                            <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="service1Title" placeholder="title" required>
+                            <div class="form-floating m-0 mb-1 ">
+                                <textarea class="form-control border-custom" placeholder="Description " name="service1Description" id="service1Description" style=" height : 100px;" required></textarea>
+                                <label class="text-muted" for="service1Description"> Service Description</label>
+                            </div>
+                        </div>
+                
+                        <div class="product mb-4">
+                            <h3>Products</h3>
+                            <div class="productContainer">
+                                <div class="productItem mb-3">
+                                    <div>Product Judul :</div>
+                                    <input type="text" class="form-control form-control-sm border-custom rounded-0" name="product[0][title]" placeholder="Product Title" required>
+                                    <div class="invalid-feedback">Judul tidak boleh kosong.</div>
+                                    <div>Product Descriptionn :</div>
+                                    <div class="form-floating mb-1 ">
+                                        <textarea class="form-control border-custom" placeholder="Description " name="product[0][description]" id="dsc-product" style=" height : 100px;" required></textarea>
+                                        <label class="text-muted" for="dsc-product"> Description</label>
+                                    </div>
+                                    <div class="invalid-feedback">Deskripsi tidak boleh kosong.</div>
+                                    <div>Product Harga :</div>
+                                    <input type="number" class="form-control form-control-sm border-custom rounded-0 mt-2" name="product[0][price]" placeholder="Product Price" required>
+                                    <div class="invalid-feedback">Harga tidak boleh kosong.</div>
+                                    <div>Product Image :</div>
+                                    <input type="file" class="form-control form-control-sm border-custom rounded-0 mt-2" name="productImage" accept="image/*" required>
+                                    <div class="invalid-feedback">Foto harus ada.</div>
+                                    <div class="variantContainer">
+                                        <div>Variants :</div>
+                                        <div class="variantItem mb-2">
+                                            <div>name :</div>
+                                            <input type="text" class="form-control form-control-sm border-custom rounded-0" name="product[0][variants][0][name]" placeholder="Variant Name" required>
+                                            <div class="invalid-feedback">Variant tidak boleh kosong.</div>
+                                            <div>satuan :</div>
+                                            <input type="text" class="form-control form-control-sm border-custom rounded-0" name="product[0][variants][0][satuan]" placeholder="Variant satuan" required>
+                                            <div>harga :</div>
+                                            <input type="number" class="form-control form-control-sm border-custom rounded-0 " name="product[0][variants][0][price]" placeholder="Variant Price" required>
+                                            <div class="invalid-feedback">Harga variant tidak boleh kosong.</div>
+                                            <div>stock :</div>
+                                            <input type="number" class="form-control form-control-sm border-custom rounded-0 " name="product[0][variants][0][stock]" placeholder="Variant stock" required>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-light btn-sm rounded-0 addVariant">Add Variant <i class="bi bi-plus-lg"></i></button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-light btn-sm rounded-0 addProduct">Add New Product <i class="bi bi-plus-lg"></i></button>
+                        </div>
+                        <div class="mb-3">
+                            <div class="fw-bold">service 2</div>
+                            <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="service2Label" placeholder="label" required>
+                            <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="service2Title" placeholder="title" required>
+                            <div class="form-floating mb-1">
+                                <textarea class="form-control border-custom" placeholder="about website" name="service2Description" id="service2Description" style=" height : 100px;"></textarea>
+                                <label class="text-muted" for="service2Description">Service 2 Website</label>
+                              </div>
+                            <input type="file" class="form-control form-control-sm border-custom rounded-0 mb-1" name="service2image" accept="image/*"  required>
+                        </div>
+                        <div class="testi mb-4">
+                            <h3>Testimonial</h3>
+                            <div class="testimoniContainer" >
+                               
+                                    <div class="testimoniItem mb-3">
+                                        <div class="p-0 m-0">name :</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0" 
+                                               name="testimoni[0][name]" 
+                                               placeholder="testimoni name" 
+                                               >
+                                        <div class="p-0 m-0">description :</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0" 
+                                               name="testimoni[0][description]" 
+                                               placeholder="testimoni Description">
+                                    </div>
+                                     <hr/>
+                              
+                            </div>
+                            <button type="button" class="btn btn-light btn-sm rounded-0 addTesti" >Add New Testimoni <i class="bi bi-plus-lg"></i></button>
+                        </div>
+                        <div class="jasakirim mb-4">
+                            <h3>Method Pengiriman</h3>
+                            <div class="jasakirimContainer" >
+                               
+                                    <div class="jasakirimItem mb-3">
+                                        <div class="p-0 m-0">name :</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0" 
+                                               name="methodPengiriman[0][name]" 
+                                               placeholder="jasakirim name" 
+                                               >
+                                    </div>
+                                     <hr/>
+                              
+                            </div>
+                            <button type="button" class="btn btn-light btn-sm rounded-0 addJasakirim" >Add New Testimoni <i class="bi bi-plus-lg"></i></button>
+                        </div>
+                        <div class="bank-transfer mb-4">
+                            <h3>Bank Transfer</h3>
+                            <div id="bankContainer">
+                                <div class="bankItem mb-3">
+                                    <div class="p-0 m-0">label :</div>
+                                    <input type="text" class="form-control form-control-sm border-custom rounded-0" name="bankTransfer[0][type]" placeholder="Bank Type" required>
+                                    <div class="p-0 m-0">description :</div>
+                                    <input type="file" class="form-control form-control-sm border-custom rounded-0 " name="logoBank" accept="image/*" required>
+            
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-light btn-sm rounded-0" id="addBankTransfer">Add New Bank Transfer <i class="bi bi-plus-lg"></i></button>
+                        </div>
+                
+                        <div class="process mb-4">
+                            <h3>Process Pembelian</h3>
+                            <div class="processContainer" >
+                                <div class="processItem mb-3">
+                                    <input type="text" class="form-control form-control-sm border-custom rounded-0" name="processPembelian[0][label]" placeholder="Process Label" required>
+                                    <input type="text" class="form-control form-control-sm border-custom rounded-0 mt-2" name="processPembelian[0][description]" placeholder="Process Description" required>
+                                </div>
+                                <hr/>
+                            </div>
+                            <button type="button" class="btn btn-light btn-sm rounded-0  addProcess" >Add New Process <i class="bi bi-plus-lg"></i></button>
+                        </div>
+                        <div class="mb-3">
+                            <div class="fw-bold">About</div>
+                            <div class="form-floating">
+                                <textarea class="form-control border-custom" placeholder="about website" name="about" id="about" style=" height : 100px;"></textarea>
+                                <label class="text-muted" for="about">About Website</label>
+                              </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="fw-bold">Footer web:</div>
+                            <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="coppyRight" placeholder="Link Web"  >
+                            <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="whatsapp"  placeholder="Link whatsapp" >
+                            <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="facebook"  placeholder="Link facebook " >
+                            <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="instagram"  placeholder="Link instagram "  >
+                            <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="yutube"  placeholder="Link yutube"  >
+                            <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="email"  placeholder="email"  >
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="address" placeholder="Alamat"  >
+                            <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="pesanWa" placeholder="pesan untuk wa"  >
+                            <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="location" placeholder="titik kordinat google map" >
+                        </div>
+                        <div class="mb-3">
+                            <div class="fw-bold">Meta Tag:</div>
+                            
+                            <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="googelConsoleSerch" placeholder="your_verification_code_here"  >
+                            <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="metaTitle" placeholder="metaTitle"  >
+                            <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="metaDescription"  placeholder="metaDescription" >
+                            <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="metaUrl"  placeholder="metaUrl " >
+                            <div class="key mb-4">
+                                <div>Meta keywords</div>
+                                <div class="keywordsContainer">
+                                    <div class="keywordsItem p-1">
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0" name="metaKeywords[0][name]" placeholder="keywords" >
+                                     </div>
+                                </div>
+                                <button type="button" class="btn btn-light btn-sm rounded-0 addKeywords">Add New Keywords <i class="bi bi-plus-lg"></i></button>
+                            </div>
+                        </div>
+                        <div  class="mb-3 " id="responseMessage"></div>
+                        <button type="submit"  class="btn  btn-primary rounded-0">Create Website</button>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+        </div>
+<!-- EDIT WEB -->
+        <% if(!websiteData) {%>
+            <div></div>
+            <% } else  {%>
+                <div class="container">
+                   
+                      <div class="modal fade" id="editweb" tabindex="-1" aria-labelledby="editweb-Label" aria-hidden="true" >
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header p-1 ps-2 pe-2"  >
+                              <h5 class="modal-title fs-6 " id="editweb-Label">Edit  Web</h5>
+                              <button type="button" class="btn btn-sm border-danger bg-trasparant rounded-0"  data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg text-danger"></i></button>
+                            </div>
+                            <div class="modal-body d-flex justify-content-center"  >
+                
+                                <form class="form-submit" data-url="/editweb" enctype="multipart/form-data"   style="max-width: 726px;">
+                                    <div class="mb-3">
+            
+                                        <label for="inputWarna" class="form-label">Pilih Warna web:</label>
+                                        <div class="d-flex">
+                                            <div class="dropdown">
+                                            <button class="btn  border-custom dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Pilih Warna
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <li><a class="dropdown-item" href="#" data-value="merah" data-val="#a40009">Merah <i class="bi bi-circle-fill ms-1" style="color:#a40009;"></i></a></li>
+                                                <li><a class="dropdown-item"  href="#" data-value="dark" data-val="#000000">dark <i class="bi bi-circle-fill ms-1" style="color:#000000;"></i></a></li>
+                                                <li><a class="dropdown-item"  href="#" data-value="orange" data-val="#f04905">orange <i class="bi bi-circle-fill ms-1" style="color:#f04905;"></i></a></li>
+                                                <li><a class="dropdown-item"  href="#" data-value="pink" data-val="#eeb1a8">pink <i class="bi bi-circle-fill ms-1" style="color:#eeb1a8;"></i></a></li>
+                                                <li><a class="dropdown-item"  href="#" data-value="blue" data-val="#0c0b97">blue <i class="bi bi-circle-fill ms-1" style="color:#0c0b97;"></i></a></li>
+                                                <li><a class="dropdown-item"  href="#" data-value="green" data-val="#3a9b7c" >green <i class="bi bi-circle-fill ms-1" style="color:#3a9b7c;"></i></a></li>
+                                                <li><a class="dropdown-item"  href="#" data-value="coklat"data-val="#7d4a2c">coklat <i class="bi bi-circle-fill ms-1" style="color:#7d4a2c;"></i></a></li>
+                                                <li><a class="dropdown-item"  href="#" data-value="ungu" data-val="#dca8f1">ungu <i class="bi bi-circle-fill ms-1" style="color:#dca8f1;"></i></a></li>
+                                                <li><a class="dropdown-item"  href="#" data-value="gold" data-val="#f2b901">gold <i class="bi bi-circle-fill ms-1" style="color:#f2b901;"></i></a></li>
+            
+                                            </ul>
+                                        </div>
+            
+                                        <input type="color" class="border-custom ms-2 inputWarna" id="inputWarna2"  name="colorWeb" value="<%= websiteData?.website?.colorWeb %>" />
+                                    </div>
+                                        
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Website Name:</label>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0" name="name" value="<%= websiteData?.website?.name %>">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="imageLogo" class="form-label">Logo:</label>
+                                        <input type="file" class="form-control form-control-sm border-custom rounded-0" name="imageLogo" accept="image/*" >
+                                        <img src="https://drive.google.com/thumbnail?export=view&id=<%= websiteData?.website?.imageLogo %>" alt="" style="width: 50px; height: auto;">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="imageHeader" class="form-label">Header Image:</label>
+                                        <input type="file" class="form-control form-control-sm border-custom rounded-0" name="imageHeader" accept="image/*" >
+                                        <img src="https://drive.google.com/thumbnail?export=view&id=<%= websiteData?.website?.imageHeader %>" alt="" style="width: 50px; height: auto;">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="descriptionCta" class="form-label">Description header Cta:</label>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0" name="descriptionCta" value="<%= websiteData?.website?.descriptionCta %>" required>
+                                    </div>
+            
+            
+                                    <div class="mb-3">
+                                        <div class="fw-bold">service 1</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="service1Label" placeholder="label" value="<%= websiteData?.website?.main?.service1?.label %>" >
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="service1Title" placeholder="title" value="<%= websiteData?.website?.main?.service1?.title %>" >
+                                        <div class="form-floating m-0 mb-1 ">
+                                            <textarea class="form-control border-custom" placeholder="Description " name="service1Description" id="service1Description" style=" height : 100px;"><%= websiteData?.website?.main?.service1?.description%></textarea>
+                                            <label class="text-muted" for="service1Description"> Service Description</label>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="mb-3">
+                                        <div class="fw-bold">service 2</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="service2Label" placeholder="label" value="<%= websiteData?.website?.main?.service2?.label %>">
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="service2Title" placeholder="title" value="<%= websiteData?.website?.main?.service2?.title %>">
+                                        <div class="form-floating mb-1">
+                                            <textarea class="form-control border-custom" placeholder="about website" name="service2Description" id="service2Description" style=" height : 100px;"><%= websiteData?.website?.main?.service2?.description%></textarea>
+                                            <label class="text-muted" for="service2Description">Service 2 Website</label>
+                                          </div>
+                                        <input type="file" class="form-control form-control-sm border-custom rounded-0 mb-1" name="service2image" accept="image/*"  >
+                                        <img src="https://drive.google.com/thumbnail?export=view&id=<%= websiteData?.website?.main?.service2?.image %>" alt="" style="width: 50px; height: auto;">
+                                    </div>
+                                    <div class="testi mb-4">
+                                        <h3>Testimonial</h3>
+                                        <div class="testimoniContainer" >
+                                            <% websiteData?.website?.testimoni?.map((testi, index) => { %>
+                                                <div class="testimoniItem mb-3">
+                                                    <div class="p-0 m-0">name :</div>
+                                                    <input type="text" class="form-control form-control-sm border-custom rounded-0" 
+                                                           name="testimoni[<%= index %>][name]" 
+                                                           placeholder="testimoni name" 
+                                                           value="<%= testi?.name?.trim() %>">
+                                                    <div class="p-0 m-0">description :</div>
+                                                    <input type="text" class="form-control form-control-sm border-custom rounded-0" 
+                                                           name="testimoni[<%= index %>][description]" 
+                                                           placeholder="testimoni Description" 
+                                                           value="<%= testi?.description?.trim() %>">
+                                                </div>
+                                                <button type="button" class="btn btn-sm rounded-0 border-danger mt-2 <%- index === 0 ? 'd-none' : '' %>   removeTesti  "><i class="bi bi-x-lg text-danger"></i></button>
+                                                <hr/>
+                                            <% }) %>
+                                        </div>
+                                        <button type="button" class="btn btn-light btn-sm rounded-0 addTesti" >Add New Testimoni <i class="bi bi-plus-lg"></i></button>
+                                    </div>
+
+                                    <div class="jasakirim mb-4">
+                                        <h3>Method Pengiriman</h3>
+                                        <div class="jasakirimContainer" >
+                                            <% websiteData?.website?.methodPengiriman?.map((method, index) => { %>
+                                                <div class="jasakirimItem mb-3">
+                                                    <div class="p-0 m-0">name :</div>
+                                                    <input type="text" class="form-control form-control-sm border-custom rounded-0" 
+                                                           name="methodPengiriman[0][name]" 
+                                                           placeholder="jasakirim name" 
+                                                           value="<%= method.name %> "
+                                                           >
+                                                </div>
+                                                 <hr/>
+                                                 <% }) %>
+                                        </div>
+                                        <button type="button" class="btn btn-light btn-sm rounded-0 addJasakirim" >Add New Jasakirim <i class="bi bi-plus-lg"></i></button>
+                                    </div>
+                            
+                                    <div class="process mb-4">
+                                        <h3>Process Pembelian</h3>
+                                        <div class="processContainer" >
+                                            <% websiteData?.website?.processPembelian?.map((process, index) => { %>
+                                                <div class="processItem mb-3">
+                                                    <div class="p-0 m-0">label :</div>
+                                                    <input type="text" class="form-control form-control-sm border-custom rounded-0" 
+                                                           name="processPembelian[<%= index %>][label]" 
+                                                           placeholder="Process Label" 
+                                                           value="<%= process?.label?.trim() %>">
+                                                    <div class="p-0 m-0">description :</div>       
+                                                    <input type="text" class="form-control form-control-sm border-custom rounded-0 " 
+                                                           name="processPembelian[<%= index %>][description]" 
+                                                           placeholder="Process Description" 
+                                                           value="<%= process?.description?.trim() %>">
+                                                </div>
+                                                <button type="button" class="btn btn-sm rounded-0 border-danger mt-2 <%- index === 0 ? 'd-none' : '' %>   removeProcess  "><i class="bi bi-x-lg text-danger"></i></button>
+                                                <hr/>
+                                            <% }) %>
+                                        </div>
+                                        <button type="button" class="btn btn-light btn-sm rounded-0 addProcess" >Add New Process <i class="bi bi-plus-lg"></i></button>
+                                    </div>
+            
+                                    <div class="mb-3">
+                                        <div class="fw-bold">About</div>
+                                        <div class="form-floating">
+                                            <textarea class="form-control border-custom" placeholder="about website" name="about" id="about" style=" height : 100px;"><%= websiteData?.website?.about %></textarea>
+                                            <label class="text-muted" for="about">About Website</label>
+                                          </div>
+                                    </div>
+            
+                                    <div class="mb-3">
+                                        <div class="fw-bold">Footer web:</div>
+                                        <div class="p-0 m-0">coppyRight :</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="coppyRight" placeholder="Link Web" value="<%= websiteData?.website?.footer?.coppyRight%>" >
+                                        <div class="p-0 m-0">whatsapp  :</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="whatsapp"  placeholder="Link whatsapp" value="<%= websiteData?.website?.footer?.contact?.whatsapp %>" >
+                                        <div class="p-0 m-0">facebook  :</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="facebook"  placeholder="Link facebook " value="<%= websiteData?.website?.footer?.contact?.facebook %>" >
+                                        <div class="p-0 m-0">instagram  :</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="instagram"  placeholder="Link instagram " value="<%= websiteData?.website?.footer?.contact?.instagram%>"  >
+                                        <div class="p-0 m-0">youtube  :</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="yutube"  placeholder="Link yutube" value="<%= websiteData?.website?.footer?.contact?.yutube %>" >
+                                        <div class="p-0 m-0">Email  :</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="email"  placeholder="email" value="<%= websiteData?.website?.footer?.contact?.email %>" >
+                                    </div>
+            
+                                    <div class="mb-3">
+                                        <div class="p-0 m-0">Alamat :</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="address" placeholder="Alamat" value="<%= websiteData?.website?.address %>" >
+                                        <div class="p-0 m-0">Pesan Wa :</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="pesanWa" placeholder="pesan untuk wa" value="<%= websiteData?.website?.pesanWa %>" >
+                                        <div class="p-0 m-0">Googel Map embeded :</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="location" placeholder="titik kordinat google map" value="<%= websiteData?.website?.location %>" >
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="fw-bold">Meta Tag:</div>
+                                        <div class="p-0 m-0">verivikasi googel console id  :</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="googelConsoleSerch" placeholder="your_verification_code_here" value="<%= websiteData?.website?.verifikasi_google_search %>" >
+                                        <div class="p-0 m-0">meta title  :</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="metaTitle" placeholder="metaTitle" value="<%= websiteData?.website?.seoMeta?.meta_title %>"  >
+                                        <div class="p-0 m-0">meta Description  :</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="metaDescription"  placeholder="metaDescription" value="<%= websiteData?.website?.seoMeta?.meta_description %>" >
+                                        <div class="p-0 m-0">meta url  :</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="metaUrl"  placeholder="metaUrl " value="<%= websiteData?.website?.seoMeta?.meta_url %>" >
+                                        <div class="key mb-4">
+                                            <div>Meta keywords</div>
+                                            <div class="keywordsContainer">
+           
+                                                <% websiteData?.website?.seoMeta?.meta_keywords?.forEach((key, index) => { %>
+                                                    <% if (!key || key === "") { %>
+                                                        <div class="keywordsItem p-1">
+                                                            <input type="text" class="form-control form-control-sm border-custom rounded-0" name="metaKeywords[<%= index %>]" placeholder="keywords">
+                                                        </div>
+                                                    <% } else { %>
+                                                        <div class="keywordsItem p-1">
+                                                            <input type="text" class="form-control form-control-sm border-custom rounded-0" name="metaKeywords[<%= index %>]" placeholder="keywords" value="<%= key %>">
+                                                            <button type="button" class="btn btn-sm rounded-0 border-danger ms-1 <%- index === 0 ? 'd-none' : '' %> removeKeywords">
+                                                                <i class="bi bi-x-lg text-danger"></i>
+                                                            </button>
+                                                        </div>
+                                                    <% } %>
+                                                <% }) %>
+                                        
+                                            </div>
+                                            <button type="button" class="btn btn-light btn-sm rounded-0 addKeywords">Add New Keywords <i class="bi bi-plus-lg"></i></button>
+                                        </div>
+                                    </div>
+            
+                                    <div  class="mb-3 " id="responseMessage"></div>
+                                    <button type="submit"  class="btn  btn-primary rounded-0">Edit Website</button>
+                                </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                
+                    </div>
+            <% } %> 
+   
+    <!-- ADD NEW PRODUCTS -->
+        <div class="container mt-2">
+    
+      <div class="modal fade" id="productsadd" tabindex="-1" aria-labelledby="productsadd-Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header p-1 ps-2 pe-2"  >
+                <h5 class="modal-title fs-6 " id="productsadd-Label">Add New Product</h5>
+                <button type="button" class="btn btn-sm border-danger bg-trasparant rounded-0"  data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg text-danger"></i></button>
+              </div>
+              <div class="modal-body d-flex justify-content-center">
+                <form class="form-submit" data-url="/addProduct" enctype="multipart/form-data"  style="max-width: 726px;">
+                    <div class="product mb-4">
+                        <h3>Products</h3>
+                        <div class="productContainer">
+                            <div class="productItem mb-3">
+                                <div>Product Title :</div>
+                                <input type="text" class="form-control form-control-sm border-custom rounded-0" name="product[0][title]" placeholder="Product Title" required>
+                                <div class="invalid-feedback">Judul tidak boleh kosong.</div>
+                                <div>Product Description :</div>
+                                <div class="form-floating pt-2 pb-2">
+                                    <textarea class="form-control border-custom" placeholder="Description " name="product[0][description]" id="descrip" style=" height : 100px;"></textarea>
+                                    <label class="text-muted" for="descrip">Description</label>
+                                </div>
+                                  <div class="invalid-feedback">Deskripsi tidak boleh kosong.</div>
+                                  <div>Product Harga :</div>
+                                <input type="number" class="form-control form-control-sm border-custom rounded-0 mt-2" name="product[0][price]" placeholder="Product Price" required>
+                                <div class="invalid-feedback">Harga tidak boleh kosong.</div>
+                                <div>Product Image :</div>
+                                <input type="file" class="form-control form-control-sm border-custom rounded-0 mt-2" name="productImage" accept="image/*" required>
+                                <div class="invalid-feedback">Foto harus ada.</div>
+                                <div class="variantContainer">
+                                    <div>Variants :</div>
+                                    <div class="variantItem mb-2">
+                                        <div>neme :</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0" name="product[0][variants][0][name]" placeholder="Variant Name" required>
+                                        <div class="invalid-feedback">Variant tidak boleh kosong.</div>
+                                        <div>satuan :</div>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0" name="product[0][variants][0][satuan]" placeholder="Variant satuan" required>
+                                        <div>harga :</div>
+                                        <input type="number" class="form-control form-control-sm border-custom rounded-0 " name="product[0][variants][0][price]" placeholder="Variant Price" required>
+                                        <div class="invalid-feedback">Harga variant tidak boleh kosong.</div>
+                                        <div>stock :</div>
+                                        <input type="number" class="form-control form-control-sm border-custom rounded-0 " name="product[0][variants][0][stock]" placeholder="Variant stock" required>
+                                       
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-light btn-sm rounded-0 addVariant">Add Variant <i class="bi bi-plus-lg"></i></button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-light btn-sm rounded-0 addProduct">Add New Product <i class="bi bi-plus-lg"></i></button>
+                    </div>
+                    <div  class="mb-3 " id="responseMessage"></div>
+                    <button type="submit" class="btn btn-primary rounded-0">Save Products</button>
+                </form>
+            </div>
+            </div>
+          </div>
+      </div>
+        </div>
+        <!-- EDIT PRODUCTS -->
+        <div class="modal fade" id="productsEdit" tabindex="-1" aria-labelledby="productsEdit-Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header p-1 ps-2 pe-2"  >
+                    <h5 class="modal-title fs-6 " id="productsEdit-Label">Edit Product</h5>
+                    <button type="button" class="btn btn-sm border-danger bg-trasparant rounded-0"  data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg text-danger"></i></button>
+                  </div>
+                  <div class="modal-body d-flex justify-content-center">
+                    <form class="form-submit" data-url="" id="fromEdit"  enctype="multipart/form-data"  style="max-width: 726px;">
+                        <div class="product mb-4">
+                            <h3>Edit Products</h3>
+                            <div class="productContainer">
+                                <div class="productItem mb-3">
+                                    <label for="prt-e" class="form-label">Product Title:</label>
+                                    <input type="text" class="form-control form-control-sm border-custom rounded-0 m-0 mb-1" name="title" placeholder="Product Title" id="prt-e" >
+                                    <div class="invalid-feedback">Judul tidak boleh kosong.</div>
+                                    <label for="prd-e" class="form-label ">Product Description:</label>
+                                    <div class="form-floating m-0 mb-1 ">
+                                        <textarea class="form-control border-custom" placeholder="Description " name="description" id="prd-e" style=" height : 100px;"></textarea>
+                                        <label class="text-muted" for="prd-e">Description</label>
+                                    </div>
+                                   <div class="invalid-feedback">Deskripsi tidak boleh kosong.</div>
+                                   <label for="prp-e" class="form-label ">Product Harga:</label>
+                                    <input type="number" class="form-control form-control-sm border-custom rounded-0 m-0 mb-1" name="price" placeholder="Product Price" id="prp-e" >
+                                    <div class="invalid-feedback">Harga tidak boleh kosong.</div>
+                                    <label for="pria-e" class="form-label ">Product Image:</label>
+                                    <input type="file" class="form-control form-control-sm border-custom rounded-0 m-0 mb-1" id="pria-e" name="productImage" accept="image/*" >
+                                    <img src="" alt="" id="pri-e" style="width: 50px; height: auto;">
+                                    <div class="invalid-feedback">Foto harus ada.</div>
+                                    <div class="mt-1">Variants :</div>
+                                    <div class="variantContainer" id="prv-e">
+                                       
+                                        <!-- content varian-->
+                                        
+                                    </div>
+                                    <button type="button" class="btn btn-light btn-sm rounded-0 addVariant">Add Variant <i class="bi bi-plus-lg"></i></button>
+                                </div>
+                            </div>
+                         </div>
+                        <div  class="mb-3 " id="responseMessage"></div>
+                        <button type="submit" class="btn btn-primary rounded-0">Edit Products</button>
+                    </form>
+                </div>
+                </div>
+              </div>
+          </div>
+        <!-- LiST PRODUCTS -->
+        
+       <% if(!websiteData){%>
+        <div></div>
+        <% }else{ %>
+            <table id="productsList" class="tabel-parent" >
+                <thead>
+                    <tr >
+                        <th class="tabel-head">Image</th>
+                        <th class="tabel-head">Title</th>
+                        <th  class="tabel-head">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (!websiteData || !websiteData.website.main.products || websiteData.website.main.products.length === 0) { %>
+                        <tr>
+                            <td colspan="3">No products available</td>
+                        </tr>
+                    <% } else { %>
+                        <% websiteData.website.main.products.forEach((data, index) => { %>
+                            <tr class="tabel-row" >
+                                <td class="text-center" ><img src="https://drive.google.com/thumbnail?export=view&id=<%= data.image %>" alt="<%= data.title %>" style="width: 30px; height: auto;"></td>
+                                <td ><%= data.title %></td>
+                                <td class="text-center " >
+                                    <div class="d-flex justify-content-center">
+                                        <button class="btn btn-sm  p-2 pt-1 pb-1 border-1 border-primary me-1" onclick="showProductEdit('<%= data.title %>', '<%= data.description %>','<%= data.price %>','<%= data.image %>', '<%= JSON.stringify(data.variants) %>')" data-bs-toggle="modal" data-bs-target="#productsEdit"  ><i class="bi bi-pencil-fill text-primary"></i></button>
+                                      <form class="form-delete" data-delete="/delete-product/<%=data.image%>">
+                                         <button type="submit"    class=" btn btn-sm p-2 pt-1 pb-1 border-1 border-danger deleteproduct" ><i class="bi bi-trash3-fill text-danger"></i></button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } %>
+                </tbody>
+            </table>
+            <% } %> 
+         <!-- ADD NEW BANK TRANSFER -->
+         <% if (!websiteData) { %>
+            <div> </div>
+            <% } %>
+             <% if(!websiteData) {%>
+                <div></div>
+            <% } else { %>
+                  <button type="button" class="btn btn-outline-danger rounded-0 mt-4 me-1" data-bs-toggle="modal" data-bs-target="#banktransfer">
+                    Add New Bank <i class="bi bi-plus-lg"></i>
+                  </button>
+                <% } %> 
+         <div class="container mt-2">
+    
+            <div class="modal fade" id="banktransfer" tabindex="-1" aria-labelledby="banktransfer-Label" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header p-1 ps-2 pe-2"  >
+                      <h5 class="modal-title fs-6 " id="banktransfer-Label">Add New Bank Transfer</h5>
+                      <button type="button" class="btn btn-sm border-danger bg-trasparant rounded-0"  data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg text-danger"></i></button>
+                    </div>
+                    <div class="modal-body d-flex justify-content-center">
+                      <form class="form-submit" data-url="/addBank" enctype="multipart/form-data"  style="max-width: 726px;">
+                          <div class="bank mb-4">
+                              <h3>bank add</h3>
+                              <div class="bankContainer">
+                                  <div class="bankItem mb-3">
+                                      <div>bank Type :</div>
+                                      <input type="text" class="form-control form-control-sm border-custom rounded-0" name="bankTransfer[0][type]" placeholder="bank type" required>
+                                      <div class="invalid-feedback">type tidak boleh kosong.</div>
+                                      <div>no Rek :</div>
+                                      <input type="text" class="form-control form-control-sm border-custom rounded-0" name="bankTransfer[0][noRekening]" placeholder="bank noRekening" >
+                                      <div>bank Image :</div>
+                                      <input type="file" class="form-control form-control-sm border-custom rounded-0 mt-2" name="bankLogo" accept="image/*" required>
+                                      <div class="invalid-feedback">Foto harus ada.</div>
+                                    </div>
+                              </div>
+                              <button type="button" class="btn btn-light btn-sm rounded-0 addBank">Add New bank <i class="bi bi-plus-lg"></i></button>
+                          </div>
+                          <div  class="mb-3 " id="responseMessage"></div>
+                          <button type="submit" class="btn btn-primary rounded-0">Save banks</button>
+                      </form>
+                  </div>
+                  </div>
+                </div>
+            </div>
+              </div>
+
+              <!-- EDIT bank -->
+        <div class="modal fade" id="bankEdit" tabindex="-1" aria-labelledby="bankEdit-Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header p-1 ps-2 pe-2"  >
+                    <h5 class="modal-title fs-6 " id="bankEdit-Label">Edit bank</h5>
+                    <button type="button" class="btn btn-sm border-danger bg-trasparant rounded-0"  data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg text-danger"></i></button>
+                  </div>
+                  <div class="modal-body d-flex justify-content-center">
+                    <form class="form-submit" data-url="" id="editbank"  enctype="multipart/form-data"  style="max-width: 726px;">
+                        <div class="bank mb-4">
+                            <h3>Edit bank</h3>
+                            <div class="bankContainer">
+                                <div class="bankItem mb-3">
+                                    <label for="prt-e" class="form-label">Bank Type:</label>
+                                    <input type="text" class="form-control form-control-sm border-custom rounded-0 m-0 mb-1" name="type" placeholder="bank Title" id="bnk-t" >
+                                    <div class="invalid-feedback">Judul tidak boleh kosong.</div>
+                                    <label for="prt-e" class="form-label">Bank Rekening:</label>
+                                    <input type="text" class="form-control form-control-sm border-custom rounded-0 m-0 mb-1" name="noRekening" placeholder="bank Rekening" id="bnk-r" >
+                                    <label for="pria-e" class="form-label ">Product Image:</label>
+                                    <input type="file" class="form-control form-control-sm border-custom rounded-0 m-0 mb-1"  name="bankLogo" accept="image/*" >
+                                    <img src="" alt="" id="bnk-l" style="width: 50px; height: auto; ">
+                                    <div class="invalid-feedback">Foto harus ada.</div>
+                                
+                                </div>
+                            </div>
+                         </div>
+                        <div  class="mb-3 " id="responseMessage"></div>
+                        <button type="submit" class="btn btn-primary rounded-0">Edit Bank</button>
+                    </form>
+                </div>
+                </div>
+              </div>
+          </div>
+          <hr style="border-top: 2px solid #000; border-bottom: none; border-left: none; border-right: none;">
+
+
+              <% if(!websiteData){%>
+                <div></div>
+                <% }else{ %>
+                    <table id="bankList" class="tabel-parent " >
+                        <thead>
+                            <tr >
+                                <th class="tabel-head">Logo</th>
+                                <th class="tabel-head">no-rek</th>
+                                <th class="tabel-head">type</th>
+                                <th  class="tabel-head">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (!websiteData || !websiteData?.website?.bankTransfer| websiteData?.website?.bankTransfer?.length === 0) { %>
+                                <tr>
+                                    <td colspan="3"></td>
+                                </tr>
+                            <% } else { %>
+                                <% websiteData?.website?.bankTransfer?.forEach((bank, index) => { %>
+                                    <tr class="tabel-row" >
+                                        <td class="text-center" ><img src="https://drive.google.com/thumbnail?export=view&id=<%= bank.logo %>" alt="<%= bank.type %>" style="width: 30px; height: auto;"></td>
+                                        <td ><%= bank.type %></td>
+                                        <td ><%= bank.noRekening %></td>
+                                        <td class="text-center" >
+                                            <div class="d-flex justify-content-center">
+                                                <button class="btn btn-sm  p-2 pt-1 pb-1 border-1 border-primary me-1" onclick="showBankEdit('<%= bank.type %>', '<%= bank.type %>' ,'<%= bank.logo %>')" data-bs-toggle="modal" data-bs-target="#bankEdit"  ><i class="bi bi-pencil-fill text-primary"></i></button>
+                                                <form class="form-delete " data-delete="/delete-bank/<%=bank.logo%>">
+                                                    <button type="submit" class=" btn btn-sm p-2 pt-1 pb-1 border-1 border-danger" ><i class="bi bi-trash3-fill text-danger"></i></button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            <% } %>
+                        </tbody>
+                    </table>
+                    <% } %> 
+
+
+   </div>
+
+  
+
+    <!-- JAVASCRIPT -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <!-- JS ADD NEW PRODUCT -->
+    <script>
+     
+        document.querySelectorAll('.dropdown-item').forEach(function(item) {
+    item.addEventListener('click', function(event) {
+        event.preventDefault(); // Mencegah link default
+        var selectedValue = this.getAttribute('data-val');
+        var selectedValueText = this.getAttribute('data-value');
+
+        // Temukan dropdown yang sesuai dengan item yang diklik
+        var dropdown = this.closest('.dropdown');
+        var inputWarna = dropdown.nextElementSibling; // Ambil elemen input yang berada setelah dropdown
+        var dropdownToggle = dropdown.querySelector('.dropdown-toggle'); // Pilih tombol dropdown di dalam dropdown yang sama
+
+        // Pastikan inputWarna tidak null
+        if (inputWarna) {
+            // Isi input dengan nilai yang dipilih
+            inputWarna.value = selectedValue; 
+        } else {
+            console.error('Input warna tidak ditemukan');
+        }
+
+        // Ubah teks tombol dropdown
+        if (dropdownToggle) {
+            dropdownToggle.textContent = selectedValueText; 
+        } else {
+            console.error('Tombol dropdown tidak ditemukan');
+        }
+    });
+});
+         // Menyimpan data ke dalam variabel JavaScript
+         const websiteData ='<%- JSON.stringify(!websiteData ? {} : websiteData) %>';
+         const web = JSON.parse(websiteData)
+        const newColor = web?.website?.colorWeb || '#26c0b4' ;
+        function changePrimaryColor() {
+            // Mengubah warna teks
+            const thElements = document.querySelectorAll('th');
+
+            // Menambahkan border atas dan bawah pada setiap elemen <th>
+            thElements.forEach(th => {
+                th.style.borderTop = '1px solid ' + newColor; // Mengatur border atas
+                th.style.borderBottom = '1px solid ' + newColor; // Mengatur border bawah
+            });
+
+            const tdElements = document.querySelectorAll('td');
+
+            // Menambahkan border atas dan bawah pada setiap elemen <th>
+            tdElements.forEach(td => {
+                td.style.borderTop = '1px solid ' + newColor; // Mengatur border atas
+                td.style.borderBottom = '1px solid ' + newColor; // Mengatur border bawah
+            });
+
+          
+
+            const textElements = document.querySelectorAll('.text-primary');
+            textElements.forEach(element => {
+                element.style.color = newColor;
+            });
+
+            // Mengubah warna latar belakang
+            const bgElements = document.querySelectorAll('.bg-primary');
+            bgElements.forEach(element => {
+                element.style.backgroundColor = newColor;
+                element.style.borderColor = newColor; // Jika ada border
+            });
+
+            const btnScondary = document.querySelectorAll('.btn-light');
+            btnScondary.forEach(element => {
+               element.style.color = newColor;
+               element.style.borderColor = newColor; // Jika ada border
+            });
+
+            // Mengubah warna border
+            const borderElements = document.querySelectorAll('.border-custom');
+            borderElements.forEach(element => {
+                element.style.border= '1px solid ' + newColor ;
+                element.style.borderColor = newColor ; // Jika ada border'; // Mengubah warna border
+            });
+
+            // Mengubah warna tombol
+            const buttonElements = document.querySelectorAll('.btn-primary');
+            buttonElements.forEach(element => {
+                element.style.backgroundColor = newColor;
+                element.style.borderColor = newColor; // Jika ada border
+                const overlay = document.createElement('div');
+                overlay.style.position = 'absolute';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.right = '0';
+                overlay.style.bottom = '0';
+                overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.1)'; // Warna gelap dengan transparansi
+                overlay.style.opacity = '0'; // Mulai dengan tidak terlihat
+                overlay.style.transition = 'opacity 0.3s'; // Transisi untuk efek halus
+                overlay.style.pointerEvents = 'none'; // Agar tidak mengganggu interaksi dengan tombol
+                element.style.position = 'relative'; // Pastikan tombol memiliki posisi relatif
+                element.appendChild(overlay);
+                element.addEventListener('mouseover', () => {
+                    overlay.style.opacity = '1';
+                    element.style.backgroundColor = newColor; // Ganti dengan warna hover yang diinginkan
+                });
+
+                element.addEventListener('mouseout', () => {
+                    overlay.style.opacity = '0';    
+                });
+
+            });
+
+            const buttonOtlineElements = document.querySelectorAll('.btn-outline-danger');
+            buttonOtlineElements.forEach(element => {
+                element.style.color = newColor;
+                element.style.borderColor = newColor; // Jika ada border
+                 // Menambahkan efek hover menggunakan JavaScript
+                element.addEventListener('mouseover', () => {
+                    element.style.backgroundColor = newColor; // Ganti dengan warna hover yang diinginkan
+                    element.style.color = '#fff'; // Ganti dengan warna border hover yang diinginkan
+                });
+
+                element.addEventListener('mouseout', () => {
+                    element.style.color = newColor;
+                    element.style.backgroundColor = '#fff';
+                    element.style.borderColor = newColor;
+                });
+                
+            });
+            
+
+    }
+
+    document.addEventListener('DOMContentLoaded', changePrimaryColor)
+  
+
+         
+   
+
+      
+        document.getElementById('productsadd').addEventListener('submit', function(event) {
+            const inputs = [
+                document.getElementById('ttl-add-p'),
+                document.getElementById('dsc-add-p'),
+                document.getElementById('var-add-p'),
+                document.getElementById('prc-add-p'),
+                document.getElementById('fl-add-p')
+            ];
+
+            // Reset validasi
+            inputs.forEach(input => {
+                input.classList.remove('is-invalid');
+            });
+
+            let isValid = true;
+
+            // Validasi input
+            inputs.forEach(input => {
+                if (input.value.trim() === '') {
+                    input.classList.add('is-invalid');
+                    isValid = false; // Menandakan bahwa ada input yang tidak valid
+                }
+            });
+
+            if (!isValid) {
+                event.preventDefault(); // Cegah form dari submit jika ada input yang tidak valid
+            }
+        });
+    </script>
+    <script>
+        
+        $(document).ready(function() {
+            $('#productsList').DataTable({
+                     responsive: true 
+             });
+             $('#bankList').DataTable({
+                     responsive: true 
+             });
+            let productCount = 1;
+            let bankCount = 1;
+            let processCount = 1;
+            let variantIndex = 1;
+            $(document).on('click', '.addProduct', function() {
+        $('.productContainer').append(`
+                <div class="productItem mb-3">
+                    <hr/>
+                    <input type="text" class="form-control form-control-sm  rounded-0" name="product[${productCount}][title]" placeholder="Product Title" style="border: 1px solid ${newColor}" required>
+                    <div class="invalid-feedback">Judul tidak boleh kosong.</div>
+                    <input type="text" class="form-control form-control-sm  rounded-0 mt-2" name="product[${productCount}][description]" placeholder="Product Description" style="border: 1px solid ${newColor}" required >
+                    <div class="invalid-feedback">Deskripsi tidak boleh kosong.</div>
+                    <input type="number" class="form-control form-control-sm  rounded-0 mt-2" name="product[${productCount}][price]" placeholder="Product Price" style="border: 1px solid ${newColor}" required>
+                    <div class="invalid-feedback">Harga tidak boleh kosong.</div>
+                    <input type="file" class="form-control form-control-sm  rounded-0 mt-2" name="productImage" accept="image/*" style="border: 1px solid ${newColor}" required>
+                    <div class="invalid-feedback">Foto harus ada.</div>
+                    <div class="variantContainer mt-3">
+                        <div>Variants :</div>
+                        <div class="variantItem mb-2">
+                            <div>name :</div>
+                            <input type="text" class="form-control form-control-sm  rounded-0" name="product[${productCount}][variants][0][name]" placeholder="Variant Name" style="border: 1px solid ${newColor}" required>
+                            <div class="invalid-feedback">Variant tidak boleh kosong.</div>
+                            <div>satuan :</div>
+                            <input type="text" class="form-control form-control-sm  rounded-0" name="product[${productCount}][variants][0][satuan]" placeholder="Variant satuan" style="border: 1px solid ${newColor}" required>              
+                            <div>harga :</div>
+                            <input type="number" class="form-control form-control-sm  rounded-0 " name="product[${productCount}][variants][0][price]" placeholder="Variant Price" style="border: 1px solid ${newColor}" required>
+                            <div class="invalid-feedback">Harga variant tidak boleh kosong.</div>
+                            <div>stock :</div>
+                            <input type="number" class="form-control form-control-sm  rounded-0 " name="product[${productCount}][variants][0][stock]" placeholder="Variant stock" style="border: 1px solid ${newColor}" required>
+                        
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-light btn-sm d-block rounded-0 ransparent-dark-hover addVariant " style="border: 1px solid ${newColor} ; color : ${newColor};  ">Add Variant +</button>
+                    <button type="button" class="btn btn-sm d-block rounded-0 border-danger  mt-2 removeProducts"><i class="bi bi-x-lg text-danger"></i></button>
+                </div>
+            `);
+            productCount++;
+        });
+
+    // Function to add a new variant
+    $(document).on('click', '.addVariant', function() {
+        const productItem = $(this).closest('.productItem');
+        const currentVariantCount = productItem.find('.variantItem').length;
+        productItem.find('.variantContainer').append(`
+            <div class="variantItem mb-2">
+                <hr/>
+                <div>name :</div>
+                <input type="text" class="form-control form-control-sm  rounded-0" name="product[${productCount - 1}][variants][${currentVariantCount}][name]" placeholder="Variant Name" style="border: 1px solid ${newColor}" required>
+                <div class="invalid-feedback">Variant tidak boleh kosong.</div>
+                <div>satuan :</div>
+                <input type="text" class="form-control form-control-sm  rounded-0" name="product[${productCount - 1}][variants][${currentVariantCount}][satuan]" placeholder="Variant satuan" style="border: 1px solid ${newColor}" required>
+                <div>harga :</div>
+                <input type="number" class="form-control form-control-sm  rounded-0 " name="product[${productCount - 1}][variants][${currentVariantCount}][price]" placeholder="Variant Price" style="border: 1px solid ${newColor}" required>
+                <div class="invalid-feedback">Harga variant tidak boleh kosong.</div>
+                <div>stock :</div>
+                <input type="number" class="form-control form-control-sm  rounded-0 " name="product[${productCount - 1}][variants][${currentVariantCount}][stock]" placeholder="Variant stock" style="border: 1px solid ${newColor}" required>                
+                <button type="button" class="btn btn-sm rounded-0 border-danger mt-2 removeVariant"><i class="bi bi-x-lg text-danger"></i></button>
+            </div>
+        `);
+    });
+
+    // Function to remove a variant
+    $(document).on('click', '.removeVariant', function() {
+        $(this).closest('.variantItem').remove();
+    });
+
+    // Function to remove a product
+    $(document).on('click', '.removeProducts', function() {
+        $(this).closest('.productItem').remove();
+    });
+            $('#addBankTransfer').click(function() {
+                $('#bankContainer').append(`
+                    <div class="bankItem mb-3">
+                        <hr/>
+                        <input type="text" class="form-control form-control-sm  rounded-0" name="bankTransfer[${bankCount}][type]" placeholder="Bank Type" style="border: 1px solid ${newColor}" required>
+                        <input type="text" class="form-control form-control-sm  rounded-0 mt-2" name="bankTransfer[${bankCount}][noRekening]"  style="border: 1px solid ${newColor}" required>
+                        <input type="file" class="form-control form-control-sm  rounded-0 mt-2" name="logoBank" accept="image/*" style="border: 1px solid ${newColor}" required>
+                        <button type="button" class="btn btn-sm rounded-0 border-danger mt-2 removeBankTransfer"><i class="bi bi-x-lg text-danger"></i></button>
+                    </div>
+                `);
+                bankCount++;
+            });
+
+            $(document).on('click', '.removeBankTransfer', function() {
+                $(this).closest('.bankItem').remove();
+            });
+            
+            $(document).on('click', '.addProcess', function() {
+                // Temukan kontainer proses terdekat
+                const processContainer = $(this).closest('.process').find('.processContainer'); 
+                const currentProcessCount = processContainer.find('.processItem').length; // Hitung jumlah proses yang ada
+
+                // Tambahkan elemen proses baru
+                processContainer.append(`
+                    <div class="processItem mb-3">
+                        <input type="text" class="form-control form-control-sm rounded-0" name="processPembelian[${currentProcessCount}][label]" placeholder="Process Label" style="border: 1px solid ${newColor}" required>
+                        <input type="text" class="form-control form-control-sm rounded-0 mt-2" name="processPembelian[${currentProcessCount}][description]" placeholder="Process Description" style="border: 1px solid ${newColor}" required>
+                        <button type="button" class="btn btn-sm rounded-0 border-danger mt-2 removeProcess"><i class="bi bi-x-lg text-danger"></i></button>
+                        <hr/>
+                    </div>
+                `);
+            });
+
+            // Event listener untuk menghapus proses
+            $(document).on('click', '.removeProcess', function() {
+                $(this).closest('.processItem').remove();
+            });
+
+            $(document).on('click', '.addTesti', function() {
+                // Temukan kontainer proses terdekat
+                const testiContainer = $(this).closest('.testi').find('.testimoniContainer'); 
+                const testiCount = testiContainer.find('.testimoniItem').length; // Hitung jumlah proses yang ada
+
+                // Tambahkan elemen proses baru
+                testiContainer.append(`
+                    <div class="testimoniItem mb-3">
+                        <input type="text" class="form-control form-control-sm rounded-0" name="testimoni[${testiCount}][name]" placeholder="Process Label" style="border: 1px solid ${newColor}" required>
+                        <input type="text" class="form-control form-control-sm rounded-0 mt-2" name="testimoni[${testiCount}][description]" placeholder="Process Description" style="border: 1px solid ${newColor}" required>
+                        <button type="button" class="btn btn-sm rounded-0 border-danger mt-2 removeTesti"><i class="bi bi-x-lg text-danger"></i></button>
+                        <hr/>
+                    </div>
+                `);
+            });
+
+            // Event listener untuk menghapus proses
+            $(document).on('click', '.removeTesti', function() {
+                $(this).closest('.testimoniItem').remove();
+            });
+          
+            $(document).on('click', '.removeProducts', function() {
+                $(this).closest('.productItems').remove();
+            });
+
+            $(document).on('click', '.addJasakirim', function() {
+                // Temukan kontainer proses terdekat
+                const jasakirimContainer = $(this).closest('.jasakirim').find('.jasakirimContainer'); 
+                const jasakirimCount = jasakirimContainer.find('.jasakirimItem').length; // Hitung jumlah proses yang ada
+
+                // Tambahkan elemen proses baru
+                jasakirimContainer.append(`
+                    <div class="jasakirimItem mb-3">
+                      <input type="text" class="form-control form-control-sm rounded-0" name="methodPengiriman[${jasakirimCount}][name]" placeholder="Jasakirim name" style="border: 1px solid ${newColor}" required>
+                      <button type="button" class="btn btn-sm rounded-0 border-danger mt-2 removeJasakirim"><i class="bi bi-x-lg text-danger"></i></button>
+                        <hr/>
+                    </div>
+                `);
+            });
+
+            // Event listener untuk menghapus proses
+            $(document).on('click', '.removeJasakirim', function() {
+                $(this).closest('.jasakirimItem').remove();
+            });
+            $(document).on('click', '.addKeywords', function() {
+                // Temukan kontainer proses terdekat
+                const keywordsContainer = $(this).closest('.key').find('.keywordsContainer'); 
+                const currentKeywords = keywordsContainer.find('.keywordsItem').length; // Hitung jumlah proses yang ada
+
+                // Tambahkan elemen proses baru
+                keywordsContainer.append(`
+                    <div class="keywordsItem p-1 m-0 d-flex">
+                        <input type="text" class="form-control form-control-sm rounded-0 m-0" name="metaKeywords[${currentKeywords}]" placeholder="keywords" style="border: 1px solid ${newColor}" required>
+                        <button type="button" class="btn btn-sm rounded-0 border-danger ms-1  removeKeywords"><i class="bi bi-x-lg text-danger"></i></button>
+                    </div>
+                `);
+            });
+
+            // Event listener untuk menghapus proses
+            $(document).on('click', '.removeKeywords', function() {
+                $(this).closest('.keywordsItem').remove();
+            });
+
+            // ADD BANK TRANSFER
+            $(document).on('click', '.addBank', function() {
+                // Temukan kontainer proses terdekat
+                const bankContainer = $(this).closest('.bank').find('.bankContainer'); 
+                const currentBank = bankContainer.find('.bankItem').length; // Hitung jumlah proses yang ada
+
+                // Tambahkan elemen proses baru
+                keywordsContainer.append(`
+                    <div class="bankItem p-1 m-0 d-flex">
+                        <input type="text" class="form-control form-control-sm rounded-0 m-0" name="bankTransfer[${currentBank}][type]" placeholder="bank type" style="border: 1px solid ${newColor}" >
+                        <input type="text" class="form-control form-control-sm rounded-0 m-0" name="bankTransfer[${currentBank}][noRekening]" placeholder="bank no-rek" style="border: 1px solid ${newColor}" >
+                        <input type="file" class="form-control form-control-sm rounded-0 m-0" name="bankLogo"  style="border: 1px solid ${newColor}" >
+                        <button type="button" class="btn btn-sm rounded-0 border-danger ms-1  removeBank"><i class="bi bi-x-lg text-danger"></i></button>
+                    </div>
+                `);
+            });
+
+            // Event listener untuk menghapus proses
+            $(document).on('click', '.removeBank', function() {
+                $(this).closest('.bankItem').remove();
+            });
+        });
+       
+    </script>
+<!-- POST METHOT -->
+    <script>
+
+    function showProductEdit(title, description, price, image, variants) {
+
+         const fromEdit = document.getElementById('fromEdit');
+
+        // Atur atribut data-url dengan URL yang diinginkan
+        fromEdit.setAttribute('data-url', `/editProduct/${image}`);
+            // Mengatur konten modal
+            document.getElementById('prt-e').value = title;
+            document.getElementById('prd-e').value = description;
+            document.getElementById('prp-e').value = price;
+            document.getElementById('pri-e').src = `https://drive.google.com/thumbnail?export=view&id=${image}`;
+
+            const variantContainer = document.getElementById('prv-e');
+            variantContainer.innerHTML = ''; // Kosongkan kontainer varian sebelum menambahkan yang baru
+
+            const vari = JSON.parse(variants);
+            
+            // Menambahkan input varian yang ada
+            vari.forEach((variant, index) => {
+                const variantItem = document.createElement('div');
+                variantItem.classList.add('variantItem', 'mb-2');
+                variantItem.innerHTML = `
+                    <hr/>
+                    <div> name :</div>
+                    <input type="text" class="form-control form-control-sm border-custom rounded-0" name="product[0][variants][${index}][name]" placeholder="Variant Name" value="${variant.name}" style="border: 1px solid ${newColor}" required>
+                    <div class="invalid-feedback">Variant tidak boleh kosong.</div>
+                    <div> satuan :</div>
+                    <input type="text" class="form-control form-control-sm border-custom rounded-0" name="product[0][variants][${index}][satuan]" placeholder="Variant Satuan" value="${variant.satuan}" style="border: 1px solid ${newColor}" required>       
+                    <div>harga :</div>
+                    <input type="number" class="form-control form-control-sm border-custom rounded-0" name="product[0][variants][${index}][price]" placeholder="Variant Price" value="${variant.price}" style="border: 1px solid ${newColor}" required>
+                    <div class="invalid-feedback">Harga variant tidak boleh kosong.</div>
+                    <div>stock :</div>
+                    <input type="number" class="form-control form-control-sm border-custom rounded-0" name="product[0][variants][${index}][stock]" placeholder="Variant stock" value="${variant.stock}" style="border: 1px solid ${newColor}" required>
+                   
+                    <button type="button" class="btn btn-sm rounded-0 border-danger mt-2 ${index === 0 ? 'd-none' : ''}  removeVariant "  ><i class="bi bi-x-lg text-danger"></i></button>
+                `;
+                variantContainer.appendChild(variantItem);
+            });
+
+        
+        
+    }
+
+    function showBankEdit(type,rek,logo ) {
+
+        const fromEdit = document.getElementById('editbank');
+
+        // Atur atribut data-url dengan URL yang diinginkan
+        fromEdit.setAttribute('data-url', `/editBank/${logo}`);
+        // Mengatur konten modal
+        document.getElementById('bnk-t').value = type;
+        document.getElementById('bnk-r').value = rek;
+        document.getElementById('bnk-l').src = `https://drive.google.com/thumbnail?export=view&id=${logo}`;
+    }
+
+
+document.addEventListener('submit', function(event) {
+    if (event.target.classList.contains('form-submit')) {
+        event.preventDefault(); // Mencegah pengiriman form default
+        const formData = new FormData(event.target);
+        const submitButton = event.target.querySelector('button[type="submit"]');
+        const responseMessage = event.target.querySelector('#responseMessage');
+        const url = event.target.getAttribute('data-url'); // Ambil URL dari atribut data-url
+
+        // Mengubah teks tombol menjadi "Loading..."
+        submitButton.textContent = 'Loading...';
+        submitButton.disabled = true; // Menonaktifkan tombol saat pengiriman
+
+        fetch(url, { // Gunakan URL yang diambil dari form
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Menampilkan pesan sukses
+            responseMessage.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+            // Mengosongkan form
+            event.target.reset();
+            // Mengarahkan ke halaman home
+            setTimeout(() => {
+                window.location.href = '/dashboard'; // Ganti dengan URL halaman home Anda
+            }, 2000);
+        })
+        .catch(error => {
+            // Menampilkan pesan kesalahan
+            responseMessage.innerHTML = `<div class="alert alert-danger">${error.message}</div>`;
+            // Mengembalikan teks tombol ke semula
+            submitButton.textContent = 'Submit';
+            submitButton.disabled = false; // Mengaktifkan kembali tombol
+        });
+    }
+});
+
+
+// Fungsi untuk menangani penghapusan produk
+document.addEventListener('submit', function(event) {
+    if (event.target.classList.contains('form-delete')) {
+        event.preventDefault(); // Mencegah pengiriman form default
+      
+        const submitButton = event.target.querySelector('button[type="submit"]');
+        const responseMessage = document.createElement('div'); // Membuat elemen div untuk alert
+        const url = event.target.getAttribute('data-delete'); // Ambil URL dari atribut data-url
+
+        // Mengubah teks tombol menjadi "Loading..."
+        submitButton.textContent = 'Menghapus...!';
+        submitButton.disabled = true; // Menonaktifkan tombol saat pengiriman
+
+        fetch(url, { // Gunakan URL yang diambil dari form
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Menampilkan pesan sukses
+            responseMessage.className = 'alert alert-success alert-dismissible fade show';
+            responseMessage.innerHTML = `
+                ${data.message}
+            `;
+            document.body.appendChild(responseMessage); // Menambahkan alert ke body
+
+            // Mengatur posisi alert di pojok kanan atas
+            responseMessage.style.position = 'fixed';
+            responseMessage.style.top = '10px';
+            responseMessage.style.right = '10px';
+            responseMessage.style.zIndex = '1000';
+
+            // Mengosongkan form
+            event.target.reset();
+
+            // Menghilangkan alert setelah 3 detik
+            setTimeout(() => {
+                responseMessage.remove();
+                // Mengarahkan ke halaman home
+                window.location.href = '/dashboard'; // Ganti dengan URL halaman home Anda
+            }, 3000);
+        })
+        .catch(error => {
+            // Menampilkan pesan kesalahan
+            responseMessage.className = 'alert alert-danger alert-dismissible fade show';
+            responseMessage.innerHTML = `
+                ${error.message}
+                <button type="button" class="close btn btn-otline-danger" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            `;
+            document.body.appendChild(responseMessage); // Menambahkan alert ke body
+
+            // Mengatur posisi alert di pojok kanan atas
+            responseMessage.style.position = 'fixed';
+            responseMessage.style.top = '10px';
+            responseMessage.style.right = '10px';
+            responseMessage.style.zIndex = '1000';
+
+            // Mengembalikan teks tombol ke semula
+            submitButton.textContent = 'Submit';
+            submitButton.disabled = false; // Mengaktifkan kembali tombol
+
+            // Menghilangkan alert setelah 3 detik
+            setTimeout(() => {
+                responseMessage.remove();
+            }, 3000);
+        });
+    }
+});
+</script>
+
+    
+</body>
+</html>

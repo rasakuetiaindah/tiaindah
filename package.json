@@ -3,20 +3,26 @@
   "version": "0.0.0",
   "private": true,
   "main": "functions/api.js",
+  "proxy": "https://3000-idx-tiaindahview-1732893169740.cluster-nx3nmmkbnfe54q3dd4pfbgilpc.cloudworkstations.dev/",
   "scripts": {
     "start": "node functions/app.js",
     "dev": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@upstash/redis": "^1.34.3",
+    "bcrypt": "^5.1.1",
     "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^16.4.5",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "googleapis": "^144.0.0",
     "http-errors": "~1.6.3",
+    "jsonwebtoken": "^9.0.2",
     "morgan": "~1.9.1",
     "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.16",
     "serverless-http": "^3.2.0",
     "sharp": "^0.33.5"
   },

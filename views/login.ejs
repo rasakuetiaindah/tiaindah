@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <title>Login</title>
+    <style>
+        .loading {
+            display: none;
+        }
+    </style>
+</head>
+<body class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div class="login-container bg-white p-4 rounded shadow text-center">
+        <h1 class="fw-bold">Login</h1>
+        <p class="text-muted">Welcome back! Please enter your details.</p>
+        
+        <div id="alert" class="alert d-none" role="alert"></div>
+        
+        <form id="loginForm">
+            <div class="mb-3 text-start">
+                <label class="form-label" for="email">Email</label>
+                <input class="form-control" id="email" name="email" placeholder="Enter your email" type="email" required/>
+            </div>
+            <div class="mb-3 text-start">
+                <label class="form-label" for="password">Password</label>
+                <input class="form-control" id="password" name="password" placeholder="Password" type="password" required/>
+            </div>
+             
+            <a class="d-block mb-3 text-decoration-none text-muted" href="#" onclick="sendEmail('<%= userEmail %>')" >Forgot password</a>
+            <button class="btn btn-dark w-100 py-2" type="submit">Login</button>
+            <div class="loading text-center mt-2">
+                <i class="fas fa-spinner fa-spin"></i> Loading...
+            </div>
+        </form>
+        <p class="mt-3">
+            Don't have an account?
+            <a class="text-decoration-none" href="/users/register">Sign up</a>
+        </p>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Mencegah pengiriman form default
+
+            const loading = document.querySelector('.loading');
+            const alertBox = document.getElementById('alert');
+            alertBox.classList.add('d-none'); // Sembunyikan alert sebelumnya
+            loading.style.display = 'block'; // Tampilkan loading
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('/users/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    localStorage.setItem('token', result.token); // Simpan token ke local storage
+                    alertBox.textContent = 'Login successful! Redirecting...';
+                    alertBox.classList.remove('d-none');
+                    alertBox.classList.add('alert-success');
+                    setTimeout(() => {
+                        window.location.href = '/dashboard'; // Ganti dengan URL dashboard Anda
+                    }, 2000); // Redirect setelah 2 detik
+                } else {
+                    const error = await response.json();
+                    alertBox.textContent = error.message;
+                    alertBox.classList.remove('d-none');
+                    alertBox.classList.add('alert-danger');
+                }
+            } catch (error) {
+                alertBox.textContent = 'An error occurred. Please try again.';
+                alertBox.classList.remove('d-none');
+                alertBox.classList.add('alert-danger');
+            } finally {
+                loading.style.display = 'none'; // Sembunyikan loading
+            }
+        });
+
+   
+        async function sendEmail(email) {
+    const alertBox = document.getElementById('alert');
+    alertBox.classList.add('d-none'); // Sembunyikan alert sebelumnya
+
+    try {
+        const response = await fetch('/users/reset-password', {
+            method: 'POST', // Memisahkan 'POST' dan 'headers'
+            headers: { // Memindahkan 'headers' ke baris terpisah
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email }),
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            alertBox.textContent = result.message || 'Email sent successfully! Open your Email to reset your password.';
+            alertBox.classList.remove('d-none');
+            alertBox.classList.add('alert-success');
+        } else {
+            const error = await response.json();
+            alertBox.textContent = error.message || 'Failed to send email.';
+            alertBox.classList.remove('d-none');
+            alertBox.classList.add('alert-danger');
+        }
+    } catch (error) {
+        alertBox.textContent = 'An error occurred while sending the email. Please try again.';
+        alertBox.classList.remove('d-none');
+        alertBox.classList.add('alert-danger');
+    }
+}
+    </script>
+</body>
+</html>

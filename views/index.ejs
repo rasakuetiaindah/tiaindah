@@ -1,0 +1,1458 @@
+
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta name="google-site-verification" content="<%=  web?.verifikasi_google_search || ''  %>" />
+    <meta name="description" content="<%=  web?.seoMeta?.meta_description || ''  %>">
+    <meta name="keywords" content="<%= web?.seoMeta?.meta_keywords?.join(', ') || ''  %>">
+    <meta name="author" content="<%=  web?.footer?.coppyRight || ''  %>">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="<%=  web?.seoMeta?.meta_title || ''  %>">
+    <meta property="og:description" content="<%=  web?.seoMeta?.meta_description || ''  %>">
+    <meta property="og:image" content="https://drive.google.com/thumbnail?export=view&id=<%= web?.imageLogo || '' %>">
+    <meta property="og:url" content="<%=  web?.seoMeta?.meta_url || ''  %>">
+    <meta name="twitter:card" content="https://drive.google.com/thumbnail?export=view&id=<%= web?.imageLogo || '' %>">
+    <meta name="twitter:title" content="<%=  web?.seoMeta?.meta_title || ''  %>">
+    <meta name="twitter:description" content="<%=  web?.seoMeta?.meta_description || ''  %>">
+    <meta name="twitter:image" content="https://drive.google.com/thumbnail?export=view&id=<%= web?.imageLogo || '' %>">
+  <title>
+   <%=  web?.seoMeta?.meta_title || 'website'  %> 
+  </title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&amp;family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+    * {
+            font-family: 'Roboto', sans-serif;
+    }
+    .text-sm{
+      font-size: 12px !important;
+    }
+    .text-sm-11{
+      font-size: 11px !important;
+    }
+    .navbar {
+        background-color: #fff;
+        padding: 1rem 0;
+    }
+    .font-greate-vibes {
+        font-family: 'Great Vibes', cursive;
+    }
+
+    .transparent-dark-hover:hover {
+            background-color: rgba(0, 0, 0, 0.5); /* Warna latar belakang gelap transparan saat hover */
+            transform: scale(1.05); /* Efek zoom saat hover */
+        }
+        .contain {
+          width: 100%;
+          overflow-x: auto; /* Enable horizontal scrolling */
+          white-space: nowrap; 
+          /* Hapus padding-left untuk memastikan item pertama terlihat */
+      }
+
+    .contain::-webkit-scrollbar {
+        display: none; /* Untuk Chrome, Safari, dan Edge */
+    }
+
+      .scrollable {
+          display: flex; /* Gunakan flexbox untuk layout horizontal */
+      }
+
+    .item {
+        display: inline-block; /* Make items inline-block */
+        min-width: 300px; /* Set width for each item */
+        height: auto; /* Set height for each item */
+        margin: 5px; /* Margin di sekitar item */
+        padding: 8px;
+        text-align: center;
+        border-radius: 5px;
+        user-select: none; /* Nonaktifkan pemilihan teks */
+        pointer-events: auto; /* Aktifkan interaksi mouse */
+    }
+    .modalshowup{
+      z-index: 1061 !important;
+    }
+      .dashed-line {
+                border: none; /* Menghapus border default */
+                border-top: 2px dashed black; /* Mengatur garis atas menjadi dashed */
+                height: 2px; /* Ketebalan garis */
+                margin: 20px 0; /* Jarak atas dan bawah */
+            }
+            .overlay-box {
+    position: absolute;
+    bottom: 8%; /* Menempatkan kotak di bagian bawah gambar */
+    left: 50%; /* Menempatkan kotak di tengah */
+    transform: translateX(-50%); /* Menggeser kotak ke kiri setengah lebar kotak */
+    background-color: white; /* Warna latar belakang putih */
+    padding: 10px; /* Ruang di dalam kotak */
+    text-align: center; /* Mengatur teks di tengah */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Bayangan untuk efek kedalaman */
+    display: inline-block; /* Membuat kotak mengikuti panjang isi */
+    max-width: 80%; /* Atur lebar maksimum kotak */
+    width: auto; /* Lebar mengikuti isi */
+}
+  </style>
+
+ </head>
+ <body class="">
+  <% const webName = web?.name || 'Name Brand'; // Misalnya ini adalah 'Tia Indah'
+  const words = webName.split(' '); // Memisahkan string berdasarkan spasi
+  const firstWord = words[0]; // Mengambil kata pertama 'Tia'
+  const secondWord = words[1]; // Mengambil kata kedua 'Indah'
+
+ 
+
+    %>
+    
+    <%
+     function transformPhoneNumber(phoneNumber) {
+    // Menghapus spasi dan karakter lain yang tidak diperlukan
+    phoneNumber = phoneNumber.trim();
+    
+    // Jika nomor diawali dengan '0'
+    if (phoneNumber.startsWith('0')) {
+        phoneNumber = '+62' + phoneNumber.slice(1);
+    }
+    // Jika nomor diawali dengan '+62'
+    else if (phoneNumber.startsWith('62')) {
+      phoneNumber = '+' + phoneNumber
+    } else {
+        // Jika tidak memenuhi syarat, kembalikan nomor tanpa perubahan
+        return phoneNumber.replace(/(\d{3})(?=\d)/g, '+$1-');;
+    }
+
+    // Format nomor telepon menjadi +62-xxxx-xxxx-xxxx
+    const formattedNumber = phoneNumber.replace('+62', '+62-')
+                       .replace(/(\d{3})(\d{3})(\d{2})(\d+)/, '$1-$2-$3-$4');
+    return formattedNumber;
+} 
+%> 
+    <div id="first-word" data-firstword="<%= firstWord %> "></div>
+
+<div class="container w-auto bg-soft" >
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+         <a class="navbar-brand fw-bold font-greate-vibes fs-2 " href="/" style="font-weight: 500;" >
+         <%= firstWord || 'Name '  %>  <span class="brandName font-greate-vibes"><%= secondWord || ' Brand'  %></span> 
+         </a>
+          <button class="navbar-toggler toggleNav shadow-none" aria-controls="navbarNav " aria-expanded="false" aria-label="Toggle navigation"  data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
+          <i class="bi bi-list listToggle"></i>
+         </button>
+         
+         <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <hr/>
+           <li class="nav-item">
+            <a class="nav-link" href="#<%= web?.main?.service1?.label  %>">
+              <%= web?.main?.service1?.label  %>
+            </a>
+           </li>
+           <li class="nav-item">
+            <a class="nav-link" href="#about">
+             Tentang Kami
+            </a>
+           </li>
+           <li class="nav-item">
+            <a class="nav-link" href="#<%= web?.main?.service2?.label%>">
+              <%= web?.main?.service2?.label%>
+            </a>
+           </li>
+           <li class="nav-item">
+            <a class="nav-link" href="#testimoni">
+             Testimoni
+            </a>
+           </li>
+          
+           <li class="nav-item">
+            <a class="nav-link" href="#contact">
+             Contacts
+            </a>
+           </li>
+           <li class="nav-item" id="dashboard">
+            
+           </li>
+           <li class="nav-item">
+            <a class="nav-link" href="https://wa.me/<%= web?.footer?.contact?.whatsapp %>">
+             <i class="fab fa-whatsapp">
+             </i>
+             <%= transformPhoneNumber(web?.footer?.contact?.whatsapp) %> 
+            </a>
+           </li>
+          </ul>
+         </div>
+        </div>
+       </nav>
+       <!-- ============ -->
+       <div class="container-fluid p-0">
+         <div class="position-relative" style="height: 50vh;">
+          <img alt=" placeholder image with dimensions 1920x1080, depicting a generic background scene" class="w-100 h-100 position-absolute top-0 start-0" height="1080" src="https://storage.googleapis.com/a1aa/image/yThQX8WJQUrPHhH4MU4qD5Bq0vXa5eluFPhQ7MQIzZQVKG9JA.jpg" style="object-fit: cover;" width="1920"/>
+          <div class="overlay position-absolute w-100 h-100" style="background-color: rgba(0, 0, 0, 0.5);">
+          </div>
+          <div class="container text-center position-absolute top-50 start-50 translate-middle text-white">
+           <h1 class="display-4 font-greate-vibes">
+              <%= web?.name || 'cake'  %> 
+           </h1>
+           <p class="lead">
+            <%=web?.descriptionCta || 'Explorw Product Now'  %> 
+           </p>
+           <a class="btn btn-cta btn-lg" href="https://wa.me/<%= web?.footer?.contact?.whatsapp %>" role="button">
+            Pesan Sekarang!
+           </a>
+          </div>
+         </div>
+        </div>
+        <!-- =============== -->
+     
+       <div class="catalog mt-3" id="<%= web?.main?.service1?.label %>">
+        <h2 class=" text-center font-greate-vibes hd">
+         <%= web?.main?.service1?.label || 'Cake Bakery'  %> 
+        </h2>
+        <div class=" p-2 " >
+            <div class="row border p-2 mb-3 ">
+              <div class="col-md-4 text-center d-flex flex-column justify-content-center  service1">
+                <div class="text-center p-3 ">
+                    <h3 class=" mt-3 "><%=  web?.main?.service1?.title || 'filling' %> </h3>
+                    <p><%= web?.main?.service1?.description || 'description'  %> </p>
+                    <a href="https://wa.me/<%= web?.footer?.contact?.whatsapp %>" class="btn btn-outline-light">Cekout</a href="https://wa.me/<%= web?.footer?.contact?.whatsapp %>">
+                </div>
+              </div>
+              <div class="col-md-8 ">
+                <div class="row   ">
+                  <% function formatPrice(amount) {
+                    return new Intl.NumberFormat('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR', // Ganti dengan kode mata uang yang sesuai
+                        minimumFractionDigits: 0, // Tidak ada desimal
+                        maximumFractionDigits: 0  // Tidak ada desimal
+                    }).format(amount);
+                }
+                 %> 
+                    <% web?.main?.products?.forEach((item,index)=> {%>
+                      <div class="col-6 col-md-4 col-lg-3 m-0 p-1 " data-bs-toggle="modal" data-bs-target="#detail-product" style="cursor: pointer;" onclick="detailProduct('<%= item.title %>','<%= item.description %>','<%= item.price %>','<%= JSON.stringify(item.variants) %>','<%= item.image %>')" >
+                        <div>
+                          <img src="https://drive.google.com/thumbnail?export=view&id=<%= item.image %>" class="img-thumbnail" alt="<%= item.title %>">
+                          <h3 class="fs-6 text-sm m-0 px-1 "><%= item.title %></h3>
+                          <p class="text-sm m-0 px-1 price "><%= formatPrice(item.price) %></p>
+                          <div class="d-flex justify-content-between   px-1 m-0">
+                           </div>
+  
+                        </div>
+                      </div>
+                    <%}) %> 
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <p><span class="text-primary" data-bs-toggle="modal" data-bs-target="#allProduct" style="cursor: pointer;">lainnya...</span></p>
+            </div>
+          </div>
+          <!-- ===== -->
+          <% 
+          
+          function calculateDiscountPercentage(originalPrice, sellingPrice) {
+    // Memastikan harga awal dan harga jual adalah angka positif
+    if (originalPrice <= 0 || sellingPrice < 0) {
+        throw new Error("Harga awal harus lebih besar dari 0 dan harga jual tidak boleh negatif.");
+    }
+
+    // Menghitung diskon
+    const discount = originalPrice - sellingPrice;
+
+    // Menghitung persentase diskon
+    const discountPercentage = (discount / originalPrice) * 100;
+
+    // Membulatkan hasil ke atas
+    return Math.ceil(discountPercentage);
+
+}
+
+
+          %>
+       </div>
+       <div class="about" id="about" >
+        <h2 class=" text-center font-greate-vibes mt-4 hd">
+         Tentang Kami
+        </h2>
+        <p class="text-center text-muted">
+          <%= web?.about || 'about me' %> 
+        </p>
+       
+       </div>
+       <div class="special-offer " id="<%= web?.main?.service2?.label%>">
+        <div class="container">
+         <div class="row">
+           <div class=" d-flex text-center justify-content-center mt-4">
+          <h2 class="font-italic  font-greate-vibes service2Label pt-2 pb-2 w-25">
+            <%= web?.main?.service2?.label || 'Cake Bakery'  %> 
+          </h2>
+        </div>
+          <div class="col-md-6 text-center d-flex flex-column justify-content-center  p-3 service2">
+           
+            <h3 class="mt-3">
+              <%= web?.main?.service2?.title || 'Special Ofer'  %> 
+             </h3>
+            <div> 
+              <p><%= web?.main?.service2?.description|| 'special mennemani waktu santay anda'  %> </p>
+            </div>
+            <div class="mb-3">
+              <button class ="btn btn-outline-light" onclick="sendWhatsAppSpecial()" >
+                To Order
+               </button>
+            </div>
+           
+          </div>
+          
+          <div class="col-md-6 pt-1 position-relative">
+           <img alt="Special offer cake" class="img-fluid w-100 h-auto" src="https://drive.google.com/thumbnail?export=view&id=<%= web?.main?.service2?.image %> "/>
+           <div class="overlay-box">
+            <p class="fw-bold display-5 m-0 p-0"><%=  calculateDiscountPercentage(web?.main?.service2?.hargaCoret, web?.main?.service2?.harga ) %>% OFF</p>
+            <div class="m-0 p-0" ><del class="text-muted fs-6"><%= formatPrice(web?.main?.service2?.hargaCoret) %></del> / <span class="fw-bold fs-5" id="spc-dsc" ><%= formatPrice(web?.main?.service2?.harga).slice(2) %></span></div>
+        </div>
+          </div>
+         </div>
+        </div>
+       </div>
+       <!-- ======= -->
+       <% if(!web?.testimoni || web?.testimoni.length === 0) {%>
+        <div></div>
+       <% }else {%>
+        <div class="testimonial text-center mt-5 mb-5" id="testimoni">
+          <h2 class="hd">
+           Testimonials
+          </h2>
+          <!-- Carousel wrapper -->
+          <div id="carouselExampleControls" class="carousel slide text-center carousel-dark mt-5 mb-5" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <% web?.testimoni?.forEach((testi, index) => { %>
+                    <div class="carousel-item <%= index === 0 ? 'active' : '' %>"> <!-- Tambahkan kondisi untuk kelas active -->
+                        <div class="row d-flex justify-content-center">              
+                            <div class="col-lg-8 ">
+                                <h5 class="mb-3"><%= testi.name %></h5>
+                                <p class="text-muted text-center ps-5 pe-5">
+                                    <i class="fas fa-quote-left pe-2"></i>
+                                    <%= testi.description %> 
+                                </p>
+                            </div>
+                        </div>
+                        <ul class="list-unstyled d-flex justify-content-center text-warning mb-0">
+                            <li><i class="fas fa-star fa-sm"></i></li>
+                            <li><i class="fas fa-star fa-sm"></i></li>
+                            <li><i class="fas fa-star fa-sm"></i></li>
+                            <li><i class="fas fa-star fa-sm"></i></li>
+                            <li><i class="far fa-star fa-sm"></i></li>
+                        </ul>
+                    </div>
+                <% }) %> 
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+  <!-- Carousel wrapper -->
+         </div>
+       <% } %>   
+       <!-- ======= -->
+       <% if(!web?.processPembelian || web?.processPembelian?.length === 0) {%>
+       <div></div>
+       <%} else {%>
+        <div class="procesPembelian mb-5">
+          <h4 class="text-center hd">Process Pembelian</h4>
+          <div class="contain">
+              <div class="scrollable d-flex justify-content-start "> <!-- Ganti justify-content-center dengan justify-content-start -->
+                  <% web?.processPembelian?.forEach((item, index) => {%>
+                      <div class="item text-center border border-dark  p-3">
+                          <div>
+                              <p class="fw-bold text-secondary"><%= item.label %></p>
+                              <p class="text-wrap text-secondary"><%= item.description %></p>
+                          </div>
+                      </div>
+                  <% }) %>  
+              </div>
+          </div>
+      </div>
+       <% }  %>   
+       <!-- ====== -->
+       <% if(!web?.address){ %>
+        <div></div>
+       <% }else { %>
+        <div class="contact" id="contact">
+          <div class="container">
+           <div class="row">
+            <h4 class="text-center hd">
+              Hubungi kami
+              </h4>
+            <div class="col">
+           <div>
+          <p class="text-center text-muted">
+            <%= web?.address %>, <%= transformPhoneNumber(web?.footer?.contact?.whatsapp) %>, <%= web?.footer?.contact?.email %>
+          </p>
+           </div>
+            </div>
+           </div>
+          </div>
+         </div>
+       <% } %>   
+       <div class="container bank transfer mt-3 mb-5">
+        <h4 class="text-center hd">Metode Pembayaran</h4>
+        <% if(!web.bankTransfer ) {%>
+          <div></div>
+        <%} else {%>
+          <div class="container text-center mt-2  ">
+          <% web.bankTransfer.forEach((item, index) => {%>
+              <img class="me-1" src="https://drive.google.com/thumbnail?export=view&id=<%= item.logo%> " alt="<%= item.type %> " style="height: 25px;" />
+            <% }) %> 
+          </div>
+          <% } %>  
+       </div>
+       <div class="location">
+        <% if(!web.location ) {%>
+          <div></div>
+        <%} else {%>
+          <h3 class="text-center bg-primary text-white rounded p-2" >Googel Map ( Location )</h3>
+          <div class="container d-flex justify-content-center ">
+             <%- location %>  
+          </div>
+          <% } %> 
+       </div>
+       <footer class="footer mt-3 p-2 pb-3">
+        <div class="container text-center ">
+         <p class="pt-3" >
+          © 2019 - <span id="year"></span> <%= web?.name || 'cake'  %> 
+         </p>
+         <a class="text-white border-1 border-end px-2" href="#<%= web?.main?.service1?.label  %>">
+          <%= web?.main?.service1?.label  %>
+         </a>
+         <a class="text-white border-1 border-end px-2" href="#about">
+          Tentang Kami
+         </a>
+         <a class="text-white border-1 border-end px-2" href="#<%= web?.main?.service2?.label%>">
+          <%= web?.main?.service2?.label%>
+         </a>
+         <a class="text-white border-1 border-end px-2" href="#testimoni">
+          Testimoni
+         </a>
+         <a class="text-white px-2" href="#contact">
+          Contacts
+         </a>
+        </div>
+       </footer>
+</div>
+<!-- CART -->
+<div class="container">
+  <button class="btn btn-colorweb position-fixed end-0" data-bs-toggle="modal" data-bs-target="#cart" style="top: 80px;" onclick="updateCartUI()">
+    <i class="bi bi-cart3 me-1"></i><span id="cart-jml" ></span><span id="cart-rp"></span> 
+  </button>
+  
+  <div class="modal fade" id="cart" data-bs-backdrop="static" tabindex="-1" aria-labelledby="cartLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header"> 
+          <h1 class="modal-title fs-5" id="cartLabel">
+            <div class="d-flex mt-2 fw-bold">
+              <i class="bi bi-shop me-2"></i>
+              <span class="text-muted font-greate-vibes p-1">
+                <%= firstWord || 'Name ' %>  
+                <span class="brandName font-greate-vibes"><%= secondWord || ' Brand' %></span> 
+              </span>
+            </div>
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+        <div class="modal-body">
+          <div class="cartContainer" id="cartContainer">
+            
+          </div>
+          
+          
+          <div class="detail-pemesann">
+            <div class="mb-3 d-flex">
+              <div class="me-1">
+                <input type="text" id="cartNamaPenerima" class="form-control form-control-sm border border-secondary  shadow-none" placeholder="Nama Penerima" name="namePenerima">
+              </div>
+              <div class="me-1">
+                <input type="text" id="cartNoTelp" class="form-control form-control-sm border  border-secondary  shadow-none" placeholder="no telp/wa" oninput="validateInput(this)" name="telp">
+              </div>
+            </div>
+            <div class="mb-3">
+ <div class="form-floating">
+                <textarea class="form-control border border-secondary shadow-none" placeholder="Alamat Pengiriman" name="about" id="cartAlamat" style="height: 100px;"></textarea>
+                <label class="text-muted" for="about">Alamat Pengiriman</label>
+              </div>
+            </div>
+            <% if(web?.methodPengiriman?.length === 0 )  {%>
+              <div></div>
+              <% }else{ %>
+                <hr/>
+                <div class="d-flex justify-content-center ps-2 mb-2 border border-secondary">
+                  <i class="bi bi-box-fill text-secondary fs-5"></i>
+                  <select class="form-select form-select-sm shadow-none border-0" id="cartPengiriman" aria-label="Small select example">
+                    <option class="fw-bold"  hidden>---Pilih Metode Pengiriman---</option>
+                    <% web?.methodPengiriman?.forEach((method , index) => {%> 
+                      <option value="<%= method.name %>"><%= method.name %> </option>
+                      <% }) %> 
+                  </select>
+                </div>
+              <% } %> 
+          <% if(web?.bankTransfer?.length === 0 ) {%>
+            <div></div>
+            <% }else{ %>
+              <div class="d-flex justify-content-center ps-2 mb-2 border border-secondary">
+                <i class="bi bi-wallet2 text-secondary fs-5"></i>
+                <select class="form-select form-select-sm shadow-none border-0" id="cartPembayaran" aria-label="Small select example">
+                  <option class="fw-bold"  hidden>---Metode Pembayaran---</option>
+                  <% web?.bankTransfer?.forEach((item, index) => { %>
+                    <option value="<%= item.type %>" data-info="<%= item.noRekening %>" >Transfer ( <%= item.type %> )</option>
+                  <% }) %> 
+                </select>
+              </div>
+              <% } %> 
+            <hr/>
+            <div class="total border p-2 border-secondary d-flex justify-content-between">
+              <div class="pesanan p-0 m-0">
+                <p class="p-0">Jumlah Pesanan</p>
+                <p class="p-0">total <span id="totalPesanan" class="price">...</span> Products</p>
+              </div>
+              <div class="p-0 m-0">
+                <p id="totalSatuan" class="satuan p-0">...</p>
+                <p id="totalBayar" class="price total-price p-0">...</p>
+              </div>
+            </div>
+              
+            <div class="modal-footer">
+              <button type="button" onclick="sendWaCart()" class="btn btn-lg btn-colorweb w-100" id="btnCart"><i class="bi bi-whatsapp me-2"></i>Buat Pesanan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- All MODAL -->
+<div class="container">
+  <!-- modal detail product -->
+<div class="modal fade modalshowup" id="detail-product" data-bs-backdrop="static" tabindex="-1" aria-labelledby="detailProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 " id="detailProductModalLabel"><div class="d-flex mt-2 fw-bold">
+          <i class="bi bi-shop me-2"></i> <p class="text-muted font-greate-vibes p-1"> <%= firstWord || 'Name '  %>  <span class="brandName font-greate-vibes"><%= secondWord || ' Brand'  %></span> 
+          </p>
+        </div></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img id="productImage" src="" class="img-fluid w-100" alt="">
+        <h4 id="productTitle" class="mt-2"></h4>
+        <div class="d-flex"><p class="price" id="productPrice"></p>/<span class="text-muted" id="productStock"></span> </div>
+        <div class="mb-2">Variant:</div>
+        <div id="variantButtons"></div>
+        <div class="mt-2 mb-2">
+            <div class="mb-2">Jumlah:</div>
+            <button class="btn btn-outline-secondary btn-sm" onclick="updateCount(-1)"><i class="bi bi-dash"></i></button>
+            <input class="btn border-secondary btn-sm" id="countDisplay" value="" style="width: 50px;" />
+            
+            <button class="btn btn-outline-secondary btn-sm" onclick="updateCount(1)"><i class="bi bi-plus"></i></button>
+        </div>
+        <!-- method  -->
+        <hr/>
+        <div class="accordion accordion-flush" id="detaileAdres">
+    
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed alert alert-warning" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+              Silahkann isi Aalamat Di sisni !
+              </button>
+            </h2>
+            <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#detaileAdres">
+              <div class="accordion-body">
+                  <!-- ==== -->
+                  <div class="mb-3 d-flex">
+                    <div class="me-1">
+                      <input type="text" class="form-control form-control-sm border border-secondary  shadow-none" placeholder="Nama Pemesan" id="detailNamaPemesan" name="namePenerima">
+                    </div>
+                    <div class="me-1">
+                      <input type="text" class="form-control form-control-sm border border-secondary  shadow-none" placeholder="No Wa / Telp" id="detailTelpPemesan" oninput="validateInput(this)" name="telp">
+                    </div>
+                  </div>
+                  <div class="mb-3">
+          <div class="form-floating">
+                      <textarea class="form-control border border-secondary shadow-none"  name="about" id="detailAlamatPemesan" style="height: 100px;"></textarea>
+                      <label class="text-muted" for="about">Alamat</label>
+                    </div>
+                  </div>
+                  <!-- ===== -->
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        <% if(web?.methodPengiriman?.length === 0 )  {%>
+          <div></div>
+          <% }else{ %>
+            <hr/>
+            <div class="d-flex justify-content-center ps-2 mb-2 border border-secondary">
+              <i class="bi bi-box-fill text-secondary fs-5"></i>
+              <select class="form-select form-select-sm shadow-none border-0" id="detailMethodPengirimanPemesan" aria-label="Small select example">
+                <option class="fw-bold" hidden>-- Pilih Metode Pengiriman -- :</option>
+                <% web?.methodPengiriman?.forEach((method , index) => {%> 
+                  <option value="<%= method.name %>"> <%= method.name %> </option>
+                  <% }) %> 
+              </select>
+            </div>
+          <% } %> 
+      <% if(web?.bankTransfer?.length === 0 ) {%>
+        <div></div>
+        <% }else{ %>
+          <div class="d-flex justify-content-center ps-2 mb-2 border border-secondary">
+            <i class="bi bi-wallet2 text-secondary fs-5"></i>
+            <select class="form-select form-select-sm shadow-none border-0" id="detailMethodPembayaranPemesan" aria-label="Small select example">
+              <option class="fw-bold"  hidden>-- Metode Pembayaran --</option>
+              <% web?.bankTransfer?.forEach((item, index) => { %>
+                <option value="<%= item.type %>" data-info="<%= item.noRekening %>">Transfer ( <%= item.type %> )</option>
+              <% }) %> 
+            </select>
+          </div>
+          <% } %> 
+        
+        <!-- ==== -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-colorweb" onclick="addToCart()"><i class="bi bi-cart3 me-1"></i><i class="bi bi-plus"></i></button>
+            <button type="button" class="btn btn-colorweb"  onclick="sendWhatsApp()"><i class="bi bi-whatsapp me-2"></i>Buat Pesanan</button>
+        </div>
+        <hr/>
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                        Description
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                    <div class="accordion-body" id="productDescription"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+    </div>
+  </div>
+ <!-- alert -->
+ <div id="successPopup" class="alert alert-success text-sm" role="alert" style="display: none; position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 1071;">
+  Sukses menambahkan produk ke keranjang
+</div>
+</div> 
+<!-- modal All Products -->
+
+<div class="modal fade " id="allProduct" data-bs-backdrop="static" tabindex="-1" aria-labelledby="allProductLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"> 
+        <h1 class="modal-title fs-5 " id="allProductLabel"><div class="d-flex mt-2 fw-bold">
+          <i class="bi bi-shop me-2"></i> <p class="text-muted font-greate-vibes p-1"> <%= firstWord || 'Name '  %>  <span class="brandName font-greate-vibes"><%= secondWord || ' Brand'  %></span> 
+          </p>
+        </div></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row ">
+            <% web?.main?.products?.forEach((item,index)=> {%>
+              <div class="col-6 col-md-4 col-lg-3 m-0 p-1 " data-bs-toggle="modal" data-bs-target="#detail-product" style="cursor: pointer;" onclick="detailProduct('<%= item.title %>','<%= item.description %>','<%= item.price %>','<%= JSON.stringify(item.variants) %>','<%= item.image %>')">
+                <div>
+                  <img src="https://drive.google.com/thumbnail?export=view&id=<%= item.image %>" class="img-thumbnail" alt="<%= item.title %>">
+                  <h3 class="fs-6 text-sm m-0 px-1 "><%= item.title %></h3>
+                  <p class="text-sm m-0 px-1 price "><%= formatPrice(item.price) %></p>
+                  <div class="d-flex justify-content-between   px-1 m-0">
+                   </div>
+                </div>
+              </div>
+            <%}) %> 
+        </div>
+       </div>
+    </div>
+  </div>
+</div>
+ 
+</div>
+<script>
+ let token =  localStorage.getItem('token')
+ let ds = document.getElementById('dashboard')
+
+ if (token) {
+  ds.innerHTML = '<a class="nav-link" href="/dashboard"><i class="bi bi-pencil-square"></i></a>'
+ }
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+ <script>
+ $(document).ready(function() {
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    const container = $('.contain');
+
+    container.on('mousedown', function(e) {
+        isDown = true;
+        container.addClass('active');
+        startX = e.pageX - container.offset().left;
+        scrollLeft = container.scrollLeft();
+    });
+
+    container.on('mouseleave mouseup', function() {
+        isDown = false;
+        container.removeClass('active');
+    });
+
+    container.on('mousemove', function(e) {
+        if (!isDown) return; // stop the fn from running
+        e.preventDefault();
+        const x = e.pageX - container.offset().left;
+        const walk = (x - startX) * 2; // the multiplier controls the scroll speed
+        container.scrollLeft(scrollLeft - walk);
+    });
+});
+ </script>
+ <script>
+
+function validateInput(input) {
+    // Mengganti semua karakter yang bukan angka dengan string kosong
+    input.value = input.value.replace(/[^0-9]/g, '');
+}
+  
+   const currentYear = new Date().getFullYear();
+    document.getElementById('year').textContent = currentYear;
+    const dt = '<%- JSON.stringify(!web ? {} : web) %>'
+// Parsing string JSON
+const parseWeb = JSON.parse(dt);
+
+
+
+    const colorWeb = parseWeb.colorWeb || '#000'
+    function hexToRgb(hex) {
+    // Menghapus tanda '#' jika ada
+    hex = hex.replace(/^#/, '');
+    
+    // Mengonversi hex ke RGB
+    let r = parseInt(hex.substring(0, 2), 16);
+    let g = parseInt(hex.substring(2, 4), 16);
+    let b = parseInt(hex.substring(4, 6), 16);
+    
+    return { r, g, b };
+}
+
+function rgbToHex(r, g, b) {
+    // Mengonversi RGB kembali ke format hex
+    return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+}
+
+function lightenColor(hex, amount) {
+    // Mengonversi hex ke RGB
+    let { r, g, b } = hexToRgb(hex);
+    
+    // Mencerahkan warna dengan menambahkan nilai ke setiap komponen
+    r = Math.min(255, r + amount);
+    g = Math.min(255, g + amount);
+    b = Math.min(255, b + amount);
+    
+    // Mengonversi kembali ke format hex
+    return rgbToHex(r, g, b);
+}
+
+// Contoh penggunaan
+const baseColor = '#000000'; // Warna dasar hitam
+const lightenedColor = lightenColor(baseColor, 100); // Mencerahkan warna dengan nilai 100
+
+console.log(lightenedColor); // Output: #646464 (atau warna yang lebih cerah)
+
+    function colorWesite() {
+      const service1 = document.querySelector('.service1')
+      if(service1) { // Pastikan elemen ditemukan
+        service1.style.backgroundColor = colorWeb;
+        service1.style.color = '#fff';
+    }
+    
+    const service2 = document.querySelector('.service2')
+      if(service2) { // Pastikan elemen ditemukan
+        service2.style.backgroundColor = colorWeb;
+        service2.style.color = '#fff';
+    }
+    const spcDsc = document.getElementById('spc-dsc')
+      if(spcDsc) { 
+        spcDsc.style.color = colorWeb;
+    }
+    const navbarBrand = document.querySelectorAll('.brandName')
+    navbarBrand.forEach(element => {
+                element.style.color = colorWeb;
+            });
+    const service2Label = document.querySelector('.service2Label')
+      if(service2Label) { // Pastikan elemen ditemukan
+        service2Label.style.color = colorWeb;
+        service2Label.style.borderTop ='2px solid' + colorWeb;
+    }
+
+    const btncta = document.querySelector('.btn-cta')
+      if(btncta) { // Pastikan elemen ditemukan
+        btncta.style.color = '#fff';
+        btncta.style.backgroundColor = colorWeb;
+    }
+    const footer = document.querySelector('.footer')
+      if(footer) { // Pastikan elemen ditemukan
+        footer.style.backgroundColor = colorWeb;
+        footer.style.color = '#fff';
+    }
+
+    const btnColorweb = document.querySelectorAll('.btn-colorweb')
+    btnColorweb.forEach(element => {
+                element.style.color = '#fff';
+                element.style.backgroundColor = colorWeb;
+               
+            });
+    const hd = document.querySelectorAll('.hd')
+    hd.forEach(element => {
+                element.style.color = colorWeb;
+            });
+            const price = document.querySelectorAll('.price')
+    price.forEach(element => {
+                element.style.color = colorWeb;
+            });
+
+            const fastar = document.querySelectorAll('.fa-quote-left')
+    fastar.forEach(element => {
+                element.style.color = colorWeb;
+            });
+
+
+     
+
+    }
+
+    document.addEventListener('DOMContentLoaded', colorWesite)
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleNav = document.querySelector('.toggleNav');
+        const list = document.querySelector('.listToggle');
+
+        toggleNav.addEventListener('click', function() {
+            // Toggle aria-expanded attribute
+            const isExpanded = toggleNav.getAttribute('aria-expanded') === 'true';
+            toggleNav.setAttribute('aria-expanded', !isExpanded);
+
+            // Change icon based on aria-expanded value
+            if (isExpanded) {
+                list.classList.add('bi-x-lg');
+                list.classList.add('text-danger');
+                list.classList.remove('text-dark');
+                list.classList.remove('bi-list');
+            } else {
+                list.classList.add('bi-list');
+                list.classList.add('text-dark');
+                list.classList.remove('text-danger');
+                list.classList.remove('bi-x-lg'); // Icon close (X)
+            }
+        });
+    });
+ const imgDetail = document.getElementById('img-prd')
+ const titleProduct = document.getElementById('ttl-prd')
+ const dscPrd = document.getElementById('dsc-prd')
+ const vrPrd = document.getElementById('vr-prd')
+ function showDetail(image , title , description ,variant  )   {
+  
+  
+ }
+ </script>
+
+<!-- product detail -->
+ 
+<script>
+  function extractThreeCharacters(str) {
+    // Mengambil 3 huruf paling depan
+    const front = str.slice(0, 3);
+
+    // Mengambil 3 huruf paling belakang
+    const back = str.slice(-3);
+
+    // Mengambil 3 huruf di tengah
+    const midIndex = Math.floor(str.length / 2);
+    let middle = '';
+
+    if (str.length < 3) {
+        // Jika panjang string kurang dari 3, kembalikan string asli
+        return str;
+    } else if (str.length % 2 === 0) {
+        // Jika panjang string genap, ambil 3 huruf di tengah
+        middle = str.slice(midIndex - 1, midIndex + 2);
+    } else {
+        // Jika panjang string ganjil, ambil 3 huruf di tengah
+        middle = str.slice(midIndex - 1, midIndex + 2);
+    }
+
+    // Menggabungkan hasil
+    const combined = front + middle + back;
+
+    // Mengembalikan hanya 3 karakter pertama dari hasil gabungan
+    return combined.slice(0, 3);
+}
+
+  const firstName = document.getElementById('first-word')
+  const fst = firstName.getAttribute('data-firstword')
+ const fsname = extractThreeCharacters(fst)
+
+  function generateCustomId() {
+    // Mendapatkan tanggal saat ini
+    const now = new Date();
+
+    // Mengambil komponen waktu
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Bulan dimulai dari 0
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    // Menggabungkan komponen menjadi string
+    const timestampString = `${year}${month}${day}${hours}${minutes}${seconds}`;
+
+    // Menghasilkan ID dengan awalan 'ABC' dan timestamp
+    const customId = `${fsname.toUpperCase()}-${timestampString}`;
+
+    return customId;
+}
+
+ function convertAndLabel(value, unit) {
+    let convertedValue;
+    let outputUnit;
+
+    if (unit === 'gram') {
+        convertedValue = value / 1000; // Konversi gram ke kilogram
+        outputUnit = 'kg';
+    } else if (unit === 'mili') {
+        convertedValue = value / 1000; // Konversi mililiter ke liter
+        outputUnit = 'L';
+    } else if (unit === 'cm') {
+        convertedValue = value / 100; // Konversi sentimeter ke meter
+        outputUnit = 'M';
+    } else {
+        return `${value} pcs`; // Jika satuan bukan gram, mili, atau cm, kembalikan nilai asli dengan satuan pcs
+    }
+
+    return `${convertedValue} ${outputUnit}`; // Kembalikan nilai yang telah dikonversi dengan satuan
+}
+
+
+function formatRupiah(angka) {
+    // Pastikan angka adalah angka
+    if (isNaN(angka)) {
+        return 'Rp0';
+    }
+
+    // Menggunakan toLocaleString untuk format angka
+    return 'Rp' + angka.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
+
+// Contoh penggunaan
+const uniqueId = generateCustomId();
+console.log(uniqueId);
+if (!localStorage.getItem('cartProducts')) {
+  localStorage.setItem('cartProducts', JSON.stringify([]));
+}
+
+  // Variabel untuk menyimpan data produk
+  let productData = {}; // Inisialisasi sebagai objek kosong
+  let selectedVariantPrice = 0; // Inisialisasi harga varian yang dipilih
+  let selectedVariantStock = 0; // Inisialisasi stok varian yang dipilih
+  let count = 1; // Inisialisasi jumlah produk
+  let selectedVariant = null; // Inisialisasi varian yang dipilih
+
+  // Fungsi untuk mengisi data produk
+  function detailProduct(title, description, price, variants, image) {
+      // Mengisi objek productData dengan data yang diterima
+      productData = {
+          title: title,
+          description: description,
+          price: price,
+          variants: JSON.parse(variants), // Mengonversi string JSON ke objek
+          image: image
+      };
+
+      console.log('detaile product',productData)
+     
+
+      // Inisialisasi data produk ke dalam elemen HTML
+      document.getElementById('productImage').src = `https://drive.google.com/thumbnail?export=view&id=${productData.image}` ;
+      document.getElementById('productTitle').innerText = productData.title;
+      document.getElementById('productDescription').innerText = productData.description;
+
+      // Reset count dan pilih varian pertama
+      count = 1;
+      selectedVariant = productData.variants[0]; // Inisialisasi varian yang dipilih
+      selectedVariantPrice = selectedVariant.price; // Set harga varian yang dipilih
+      selectedVariantStock = selectedVariant.stock; // Set stok varian yang dipilih
+
+      // Menampilkan varian
+      const variantButtons = document.getElementById('variantButtons');
+      variantButtons.innerHTML = ''; // Kosongkan sebelumnya
+      productData.variants.forEach((variant, index) => {
+          const button = document.createElement('button');
+          button.className = 'btn btn-outline-secondary btn-sm me-1';
+          button.innerText = `${variant.name} ${variant.satuan}`;
+          button.onclick = () => selectVariant(variant, button);
+          variantButtons.appendChild(button);
+          if (index === 0) {
+              button.style.borderColor = "blue"; // Ganti dengan warna yang diinginkan
+          }
+      });
+
+      // Perbarui tampilan awal
+      updateDisplay();
+  }
+
+  // Fungsi untuk memilih varian
+  function selectVariant(variant, button) {
+      if (selectedVariant === variant) return;
+
+      const buttons = document.querySelectorAll('#variantButtons button');
+      buttons.forEach(btn => {
+          btn.style.borderColor = ""; // Reset border color
+      });
+
+      button.style.borderColor = "blue"; // Ganti dengan warna yang diinginkan
+      selectedVariant = variant; // Simpan varian yang dipilih
+      selectedVariantPrice = variant.price; // Update harga varian yang dipilih
+      selectedVariantStock = variant.stock; // Update stok varian yang dipilih
+
+      count = 1; // Reset count ke 1 saat varian diubah
+      updateDisplay();
+  }
+
+  // Fungsi untuk memperbarui tampilan
+  function updateDisplay() {
+      document.getElementById('countDisplay').value = count; // Perbarui tampilan count
+      document.getElementById('productPrice').innerText = `Rp${(selectedVariantPrice * count).toLocaleString()}`; // Perbarui harga total
+      document.getElementById('productStock').innerText = `${selectedVariantStock.toLocaleString()}`; // Update stok
+  }
+
+  // Fungsi untuk menambah atau mengurangi count
+  function updateCount(change) {
+      count += change; // Tambah atau kurangi count
+      if (count < 1) {
+          count = 1; // Minimum 1
+      } else if (count > selectedVariantStock) {
+          count = selectedVariantStock; // Sesuaikan dengan stok jika melebihi
+      }
+      updateDisplay(); // Perbarui tampilan
+  }
+
+  // Event listener untuk input manual
+  document.getElementById('countDisplay').addEventListener('input', function() {
+      const inputCount = this.value; // Ambil nilai input sebagai string
+
+      // Jika input kosong, biarkan count tidak berubah
+      if (inputCount === "") {
+          return; // Biarkan input kosong
+      }
+
+      const parsedCount = parseInt(inputCount); // Coba parse input menjadi angka
+ if (!isNaN(parsedCount)) { // Pastikan input adalah angka
+          if (parsedCount < 1) {
+              count = 1; // Minimum 1
+              this.value = 1; // Update input value
+          } else if (parsedCount > selectedVariantStock) {
+              count = selectedVariantStock; // Sesuaikan dengan stok jika melebihi
+              this.value = selectedVariantStock; // Update input value
+          } else {
+              count = parsedCount; // Update count jika input valid
+          }
+      } else {
+          // Jika input bukan angka, kita tidak mengubah count
+          this.value = count; // Kembalikan ke nilai count yang valid
+      }
+      updateDisplay(); // Perbarui tampilan
+  });
+
+ 
+function addToCart() {
+    // Ambil produk yang sudah ada di Local Storage
+    let products = JSON.parse(localStorage.getItem('cartProducts')) || [];
+    console.log('dari get add cart', products);
+
+    // Buat objek produk yang akan ditambahkan
+    const productToAdd = {
+        id : generateCustomId(),
+        title: productData.title,
+        description: productData.description,
+        price : selectedVariantPrice * count ,
+        quantity: count, // Jumlah produk yang dipilih
+        satuan : selectedVariant.name  * count , 
+        variant: selectedVariant, // Varian yang dipilih
+        image: productData.image // Gambar produk
+    };
+
+    // Tambahkan produk baru ke array produk
+    products.push(productToAdd);
+    console.log('dari get add cartssss', products);
+
+    // Simpan kembali ke Local Storage
+    localStorage.setItem('cartProducts', JSON.stringify(products));
+
+    // Tampilkan pesan konfirmasi
+    const successPopup = document.getElementById('successPopup');
+    successPopup.style.display = 'block'; // Tampilkan popup
+
+    // Sembunyikan popup setelah 2 detik
+    setTimeout(() => {
+        successPopup.style.display = 'none'; // Sembunyikan popup
+    }, 2000);
+
+    // Memperbarui UI jika diperlukan
+    updateCartUI(); // Pastikan Anda memiliki fungsi ini untuk memperbarui tampilan keranjang
+
+}
+
+
+// Event listener untuk mendeteksi perubahan di Local Storage
+window.addEventListener('storage', (event) => {
+    if (event.key === 'cartProducts') {
+        updateCartUI(); // Perbarui UI jika ada perubahan di Local Storage
+       
+    }
+});
+
+  // Fungsi untuk mengirim data ke WhatsApp
+  const namaPemesan = document.getElementById('detailNamaPemesan')
+  const noTelp = document.getElementById('detailTelpPemesan')
+  const alamat = document.getElementById('detailAlamatPemesan')
+  const detailPengiriman = document.getElementById('detailMethodPengirimanPemesan')
+  let pengiriman = ''
+  let bankTransfer = ''
+  let bankRek= ''
+  detailPengiriman.addEventListener("change", function() {
+    const selectedOption = selectElement.options[selectElement.selectedIndex]; // Mengambil opsi yang dipilih
+    const selectedValue = selectedOption.value; // Mengambil nilai yang dipilih
+    pengiriman = selectedValue
+     });
+  const selectElement = document.getElementById("detailMethodPembayaranPemesan");
+selectElement.addEventListener("change", function() {
+    const selectedOption = selectElement.options[selectElement.selectedIndex]; // Mengambil opsi yang dipilih
+    const selectedValue = selectedOption.value; // Mengambil nilai yang dipilih
+    const additionalData = selectedOption.getAttribute("data-info"); // Mengambil data tambahan
+    bankTransfer = selectedValue
+    bankRek = additionalData
+    console.log(`Selected Value: ${selectedValue}`); // Menampilkan nilai yang dipilih di konsol
+    console.log(`Additional Data: ${additionalData}`); // Menampilkan data tambahan di konsol
+});
+ 
+  const separator = "------------------------------------"; 
+  const newLine = '\n'
+  function sendWhatsApp() {
+      const message = `*Order Details*:
+     
+      ${newLine}Product: ${productData.title}
+      ${newLine}Jumlah: ${count}
+      ${newLine}Jumlah satuan unit: ${convertAndLabel(selectedVariant.name,selectedVariant.satuan)}
+      ${newLine}harga: ${formatRupiah(selectedVariantPrice)}
+      ${newLine}*total bayar: ${formatRupiah(selectedVariantPrice * count)}*
+      ${newLine}
+${separator}
+      ${newLine}*isi Bio data Pemesan* :
+      ${newLine}nama pemesan: ${namaPemesan.value}
+      ${newLine}no telp: ${noTelp.value}
+      ${newLine}alamat : ${alamat.value}
+      ${newLine}Pengiriman:  ${pengiriman} 
+      ${newLine}Transfer : ${bankTransfer} 
+      ${newLine}
+${separator}
+      ${newLine}*${parseWeb.pesanWa}*
+      ${newLine}no rek: ${bankRek}
+      ${newLine}_${parseWeb.footer.coppyRight}_
+      
+      `;
+      const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+  }
+  // Tampilkan total harga
+
+
+
+
+  
+</script>
+<script>
+function updateCartUI() {
+    const products = JSON.parse(localStorage.getItem('cartProducts')) || [];
+    const cartContainer = document.getElementById('cartContainer');
+    const btnCart = document.getElementById('btnCart')
+    const cartJuumlah = document.getElementById('cart-jml')
+    const cartRp = document.getElementById('cart-rp')
+    const totalPesanan = document.getElementById('totalPesanan')
+    const totalSatuan = document.getElementById('totalSatuan')
+    const totalBayar = document.getElementById('totalBayar')
+console.log('cart', products)
+
+    cartContainer.innerHTML = ''; // Kosongkan kontainer
+     if(products.length === 0) {
+      
+      cartJuumlah.innerText = '';
+      cartRp.innerText = '';
+      totalPesanan.innerText = '(...)';
+      totalBayar.innerText = '...';
+      totalSatuan.innerText = '...';
+      cartContainer.innerHTML = '<p class="alert alert-warning">Belom ada Product di keranjang!</p>';
+      btnCart.classList.add('disabled')
+
+     } else {
+      btnCart.classList.remove('disabled')
+      let totalHarga = 0;
+      let totalSatuanUnit = 0;
+        let jml = products.length;
+            cartJuumlah.innerText = `(${jml}) pesanan`;
+            totalPesanan.innerText = `(${jml})`;
+
+            // Hitung total harga
+            products.forEach(product => {
+              totalHarga += parseFloat(product.price);
+              totalSatuanUnit += product.satuan;
+            });
+
+            // Tampilkan total harga
+            cartRp.innerText = formatRupiah(totalHarga);
+            totalBayar.innerText = formatRupiah(totalHarga);
+            totalSatuan.innerText = convertAndLabel(totalSatuanUnit , products[0]?.variant.satuan);
+    products.forEach(product => {
+        const rowDiv = document.createElement('div');
+        rowDiv.className = 'row';
+
+        // Membuat kolom untuk gambar
+        const imgCol = document.createElement('div');
+        imgCol.className = 'col';
+        const imgElement = document.createElement('img');
+        imgElement.src = `https://drive.google.com/thumbnail?export=view&id=${product.image}`; // Menggunakan URL gambar dari produk
+        imgElement.className = 'img-fluid';
+        imgElement.alt = product.title; // Menggunakan judul produk sebagai alt
+        imgCol.appendChild(imgElement);
+        rowDiv.appendChild(imgCol);
+
+        // Membuat kolom untuk deskripsi dan jumlah
+        const descCol = document.createElement('div');
+        descCol.className = 'col-6';
+        descCol.innerHTML = `
+            <p class="text-muted">${product.title}</p>
+            <p class="text-muted">variant: ${convertAndLabel(product.satuan , product.variant.satuan)} </p>
+           
+            <button class="btn btn-outline-secondary btn-sm" onclick="updateQty('${product.id}', -1)"><i class="bi bi-dash"></i></button>
+            <input class="btn border-secondary btn-sm disabled"   value="${product.quantity}" style="width: 50px;" />
+            
+            <button class="btn btn-outline-secondary btn-sm" onclick="updateQty('${product.id}', 1)"><i class="bi bi-plus"></i></button>
+           
+        `;
+        rowDiv.appendChild(descCol);
+
+        // Membuat kolom untuk harga dan tombol hapus
+        const priceCol = document.createElement('div');
+        priceCol.className = 'col d-flex flex-column justify-content-between';
+        priceCol.innerHTML = `
+            <div class="d-flex justify-content-end">
+                <p class="price" style="color: ${colorWeb};">${formatRupiah(parseInt(product.price))}</p>
+            </div>
+            <div class="d-flex justify-content-end">
+                <p class="price text-right " style="cursor: pointer; color:${colorWeb};" onclick="removeFromCart('${product.id}')">hapus</p>
+            </div>
+        `;
+        rowDiv.appendChild(priceCol);
+
+        // Menambahkan row ke kontainer
+        cartContainer.appendChild(rowDiv);
+        
+        const hrcon = document.createElement('div');
+        hrcon.innerHTML = '<hr class="dashed-line"/>'
+        cartContainer.appendChild(hrcon);
+
+    });
+
+     }
+
+    }
+
+
+const cartPengiriman = document.getElementById('cartPengiriman')
+let cartKirim = ''
+cartPengiriman.addEventListener("change", function() {
+    const selectPengiriman = cartPengiriman.options[cartPengiriman.selectedIndex]; // Mengambil opsi yang dipilih
+    const selectedValueKirim = selectPengiriman.value; // Mengambil nilai yang dipilih
+    cartKirim = selectedValueKirim
+     });
+  const cartPembayaran = document.getElementById('cartPembayaran');
+  let bankTf = ''
+  let bankRk = ''
+cartPembayaran.addEventListener("change", function() {
+    const selectedOption = cartPembayaran.options[cartPembayaran.selectedIndex]; // Mengambil opsi yang dipilih
+    const selectedValue = selectedOption.value; // Mengambil nilai yang dipilih
+    const additionalData = selectedOption.getAttribute("data-info"); // Mengambil data tambahan
+    bankTf = selectedValue
+    bankRk = additionalData
+    
+});
+    
+    function sendWaCart() {
+    const cartNamaPenerima = document.getElementById('cartNamaPenerima')
+    const cartNoTelp = document.getElementById('cartNoTelp')
+    const cartAlamat = document.getElementById('cartAlamat')
+    const products = JSON.parse(localStorage.getItem('cartProducts'));
+let jumlahTotalBayar = 0
+let jumlahTotalSatuanUnit = 0
+    products.map(product => {
+      jumlahTotalBayar += product.price;
+              jumlahTotalSatuanUnit += product.satuan;
+            });
+
+   const productDetails = products.map(product => {
+    const priceCartProducts = product.price; // Mengambil harga produk
+    const jumlah = product.quantity; // Mengambil jumlah produk
+
+    return `${newLine}Product: ${product.title}` +
+           `${newLine}Jumlah: ${jumlah}` +
+           `${newLine}Jumlah satuan unit: ${convertAndLabel(product.variant.name, product.variant.satuan)}` +
+           `${newLine}Harga: ${formatRupiah(product.variant.price)}` +
+           `${newLine}Harga total: ${formatRupiah(priceCartProducts)}` +
+           `${newLine}`+
+           `${separator}`
+           ;
+}).join('');
+
+const message = `*Order Details*:
+${productDetails}
+${newLine}Jumlah Total Pesanan : ${products.length}
+${newLine}Jumlah total satuan unit : ${convertAndLabel(jumlahTotalSatuanUnit, products[0]?.variant?.satuan)}
+${newLine}*total bayar: ${formatRupiah(jumlahTotalBayar)}*
+${newLine}
+${separator}
+    ${newLine}*isi Bio data Pemesan* :
+    ${newLine}nama pemesan: ${cartNamaPenerima.value}
+    ${newLine}no telp: ${cartNoTelp.value}
+    ${newLine}alamat : ${cartAlamat.value}
+    ${newLine}Pengiriman:  ${cartKirim} 
+    ${newLine}Transfer : ${bankTf} 
+    ${newLine}
+${separator}
+    ${newLine}*${parseWeb.pesanWa}*
+    ${newLine}no rek: ${bankRk}
+    ${newLine}_${parseWeb.footer.coppyRight}_
+    
+    `;
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+    localStorage.removeItem('cartProducts');
+    window.open(whatsappUrl, '_blank');
+
+}
+
+
+          
+function persentage(originalPrice, sellingPrice) {
+    // Memastikan harga awal dan harga jual adalah angka positif
+    if (originalPrice <= 0 || sellingPrice < 0) {
+        throw new Error("Harga awal harus lebih besar dari 0 dan harga jual tidak boleh negatif.");
+    }
+
+    // Menghitung diskon
+    const discount = originalPrice - sellingPrice;
+
+    // Menghitung persentase diskon
+    const discountPercentage = (discount / originalPrice) * 100;
+
+    // Membulatkan hasil ke atas
+    return Math.ceil(discountPercentage);
+
+}
+
+const spr = "------------------------------------"; 
+  const nwl = '\n'
+  function sendWhatsAppSpecial() {
+      const message = `*Order Details*:
+     
+      ${nwl}Product: ${parseWeb?.main?.service2?.title}
+      ${nwl}harga: ${formatRupiah(parseWeb?.main?.service2?.hargaCoret)}
+      ${nwl}discount: ${persentage(parseWeb?.main?.service2?.hargaCoret,parseWeb?.main?.service2?.harga)}% 
+      ${nwl}*total bayar: ${formatRupiah(parseWeb?.main?.service2?.harga)}*
+      ${nwl}
+${spr}
+      ${nwl}*isi Bio data Pemesan* :
+      ${nwl}nama pemesan: 
+      ${nwl}no telp: 
+      ${nwl}alamat :
+      ${nwl}Pengiriman:   
+      ${nwl}Transfer : ${parseWeb?.bankTransfer[0]?.type} 
+      ${nwl}
+${spr}
+      ${nwl}*${parseWeb?.pesanWa}*
+      ${nwl}no rek: ${parseWeb?.bankTransfer[0]?.noRekening}
+      ${nwl}_${parseWeb?.footer?.coppyRight}_
+      
+      `;
+      const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+  }
+console.log('website', parseWeb)
+
+
+// Fungsi untuk mengupdate jumlah produk
+function updateQty(productId, change) {
+    // Ambil produk dari Local Storage
+    let products = JSON.parse(localStorage.getItem('cartProducts')) || [];
+    const productIndex = products.findIndex(product => product.id === productId);
+
+    if (productIndex > -1) {
+        // Hitung jumlah baru
+        const newQuantity = products[productIndex].quantity + change;
+
+        // Ambil stok dari variant
+        const stock = products[productIndex].variant.stock;
+
+        if (newQuantity < 1) {
+            products[productIndex].quantity = 1; // Set ke 1 jika kurang dari 1
+        } else if (newQuantity > stock) {
+            products[productIndex].quantity = stock; // Set ke stok maksimum jika melebihi stok
+        } else {
+            products[productIndex].quantity = newQuantity; // Set ke jumlah baru jika dalam batas
+        }
+
+        // Hitung subtotal berdasarkan quantity dan price
+        const variantPrice = parseFloat(products[productIndex].variant.price); // Pastikan harga dalam format angka
+        const satuanVal = parseFloat(products[productIndex].variant.name); // Pastikan harga dalam format angka
+        const newSubtotal = products[productIndex].quantity * variantPrice;
+        const satuantotal = products[productIndex].quantity * satuanVal;
+
+        // Simpan kembali ke Local Storage
+        products[productIndex].price = newSubtotal; // Menyimpan subtotal jika diperlukan
+        products[productIndex].satuan = satuantotal; // Menyimpan subtotal jika diperlukan
+        localStorage.setItem('cartProducts', JSON.stringify(products));
+
+        // Perbarui UI
+        updateCartUI();
+    }
+}
+
+// Fungsi untuk menghapus produk dari keranjang
+function removeFromCart(productId) {
+    // Ambil produk dari Local Storage
+    let products = JSON.parse(localStorage.getItem('cartProducts')) || [];
+    products = products.filter(product => product.id !== productId); // Hapus produk berdasarkan ID
+
+    // Simpan kembali ke Local Storage
+    localStorage.setItem('cartProducts', JSON.stringify(products));
+
+    // Perbarui UI
+    updateCartUI();
+}
+updateCartUI()
+
+</script>
+</body>
+</html>
