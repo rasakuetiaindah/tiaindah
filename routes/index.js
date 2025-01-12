@@ -1,7 +1,7 @@
 var express = require('express');
 const { Redis } = require('@upstash/redis')
 const multer = require('multer');
-const { auth,uploadFile,deleteFile, getCurrentDate} = require('../utility/authDrive')
+const { auth,uploadFile,deleteFile} = require('../utility/authDrive')
 const { authUser } = require('../utility/authUser')
 var router = express.Router();
 
