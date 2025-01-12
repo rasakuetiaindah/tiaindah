@@ -52,6 +52,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const serverless = require('serverless-http');
+const ejs = require('ejs'); 
 
 const indexRouter = require('../routes/index');
 const usersRouter = require('../routes/users');
