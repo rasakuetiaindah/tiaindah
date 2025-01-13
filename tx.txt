@@ -1,0 +1,19 @@
+[build]
+  functions = "functions"
+[[redirects]]
+  from = "/users*"
+  to = "/.netlify/functions/app/users"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/"
+  to = "/.netlify/functions/app"
+  status = 200
+  force = true
+
+  [[redirects]]
+  from = "/dashboard"
+  to = "/.netlify/functions/app"
+  status = 200
+  force = true

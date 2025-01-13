@@ -1,19 +1,13 @@
 [build]
   functions = "functions"
-[[redirects]]
-  from = "/users*"
-  to = "/.netlify/functions/app/users"
-  status = 200
-  force = true
+  publish = "public"
+
+[functions.app]
+  external_node_modules = ["express", "ejs", "serve-favicon"]
+  node_bundler = "esbuild"
+  included_files = ["views/**", "public/**"]
 
 [[redirects]]
-  from = "/"
-  to = "/.netlify/functions/app"
+  from = "/(.*)"
   status = 200
-  force = true
-
-  [[redirects]]
-  from = "/dashboard"
-  to = "/.netlify/functions/app"
-  status = 200
-  force = true
+  to = "/.netlify/functions/app/:splat"
