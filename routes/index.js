@@ -564,17 +564,11 @@ router.get('/dashboard',authUser, async (req, res, next) => {
 router.get('/', async (req, res) => {
   try {
     const data = await redis.get('website_data');
-    
-    // Pastikan data tidak null dan parse jika perlu
-    if (!data) {
-      return res.status(404).render('index', { message: 'Data tidak ditemukan' });
-    }
-    const web = data; // Jika data adalah string JSON
-    console.log(web)
+    const web = data; // Jika data adalah string 
     const loc = data.website.location.replace(/\\\"/g, '"').replace(/\\\\/g, '\\');
 
 // Jika Anda ingin menyimpan hasilnya ke dalam variabel location
-const location = loc;
+  const location = loc;
     res.render('index', { message: 'Successfully retrieved data', web: web.website ,location });
   } catch (error) {
     console.error(error);
