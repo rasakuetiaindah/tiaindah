@@ -22,6 +22,7 @@
         <meta name="twitter:title" content="<%=  web?.seoMeta?.meta_title || ''  %>">
         <meta name="twitter:description" content="<%=  web?.seoMeta?.meta_description || ''  %>">
         <meta name="twitter:image" content="https://drive.google.com/thumbnail?export=view&id=<%= web?.imageLogo || '' %>">
+        <meta name="google" content="notranslate"/>
       <title>
        <%=  web?.seoMeta?.meta_title || 'website'  %> 
       </title>
@@ -91,14 +92,34 @@
         bottom: 8%; /* Menempatkan kotak di bagian bawah gambar */
         left: 50%; /* Menempatkan kotak di tengah */
         transform: translateX(-50%); /* Menggeser kotak ke kiri setengah lebar kotak */
-        background-color: white; /* Warna latar belakang putih */
+        background-color: rgba(255, 255, 255, 0.7) /* 50% transparan */; /* Warna latar belakang putih */
         padding: 10px; /* Ruang di dalam kotak */
         text-align: center; /* Mengatur teks di tengah */
+        font-size: small;
         box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Bayangan untuk efek kedalaman */
         display: inline-block; /* Membuat kotak mengikuti panjang isi */
         max-width: 80%; /* Atur lebar maksimum kotak */
         width: auto; /* Lebar mengikuti isi */
     }
+    .overlay-box:hover{
+      background-color: rgba(255, 255, 255, 0.4)
+    }
+    .overlay-dtl {
+    position: absolute; /* Mengatur posisi absolut untuk overlay */
+    top: 50%; /* Menempatkan di tengah vertikal */
+    left: 50%; /* Menempatkan di tengah horizontal */
+    transform: translate(-50%, -50%); /* Menggeser elemen ke tengah */
+    width: 100px; /* Lebar bulatan */
+    height: 100px; /* Tinggi bulatan */
+    background:rgba(0, 0, 0, 0.352); /* Latar belakang putih transparan */
+    border-radius: 50%; /* Membuat bulatan */
+    display: flex; /* Menggunakan flexbox untuk memusatkan teks */
+    align-items: center; /* Memusatkan secara vertikal */
+    justify-content: center; /* Memusatkan secara horizontal */
+    color: red; /* Warna teks */
+    font-weight: bold; /* Menebalkan teks */
+    text-align: center; /* Memusatkan teks */
+}
       </style>
     
      </head>
@@ -199,7 +220,7 @@
            <!-- ============ -->
            <div class="container-fluid p-0">
              <div class="position-relative" style="height: 50vh;">
-              <img alt=" placeholder image with dimensions 1920x1080, depicting a generic background scene" class="w-100 h-100 position-absolute top-0 start-0" height="1080" src="https://storage.googleapis.com/a1aa/image/yThQX8WJQUrPHhH4MU4qD5Bq0vXa5eluFPhQ7MQIzZQVKG9JA.jpg" style="object-fit: cover;" width="1920"/>
+              <img alt=" placeholder image with dimensions 1920x1080, depicting a generic background scene" class="w-100 h-100 position-absolute top-0 start-0" height="1080" src="https://drive.google.com/thumbnail?export=view&id=<%= web?.imageHeader %>" style="object-fit: cover;" width="1920"/>
               <div class="overlay position-absolute w-100 h-100" style="background-color: rgba(0, 0, 0, 0.5);">
               </div>
               <div class="container text-center position-absolute top-50 start-50 translate-middle text-white">
@@ -257,7 +278,7 @@
                   </div>
                 </div>
                 <div class="d-flex justify-content-end">
-                  <p><span class="text-primary" data-bs-toggle="modal" data-bs-target="#allProduct" style="cursor: pointer;">lainnya...</span></p>
+                  <p><span class="text-primary border-bottom border-primary" data-bs-toggle="modal" data-bs-target="#allProduct" style="cursor: pointer;">Lainnya...</span></p>
                 </div>
               </div>
               <!-- ===== -->
@@ -319,8 +340,8 @@
               <div class="col-md-6 pt-1 position-relative">
                <img alt="Special offer cake" class="img-fluid w-100 h-auto" src="https://drive.google.com/thumbnail?export=view&id=<%= web?.main?.service2?.image %> "/>
                <div class="overlay-box">
-                <p class="fw-bold display-5 m-0 p-0"><%=  calculateDiscountPercentage(web?.main?.service2?.hargaCoret, web?.main?.service2?.harga ) %>% OFF</p>
-                <div class="m-0 p-0" ><del class="text-muted fs-6"><%= formatPrice(web?.main?.service2?.hargaCoret) %></del> / <span class="fw-bold fs-5" id="spc-dsc" ><%= formatPrice(web?.main?.service2?.harga).slice(2) %></span></div>
+                <p class="fw-bold display-6 m-0 p-0"><%=  calculateDiscountPercentage(web?.main?.service2?.hargaCoret, web?.main?.service2?.harga ) %>% OFF</p>
+                <div class="m-0 p-0" ><del class="text-muted fs-6"><%= formatPrice(web?.main?.service2?.hargaCoret) %></del> / <span class="fw-bold fs-5 " id="spc-dsc" ><%= formatPrice(web?.main?.service2?.harga).slice(2) %></span></div>
             </div>
               </div>
              </div>
@@ -561,7 +582,10 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
+           <div class="position-relative">
             <img id="productImage" src="" class="img-fluid w-100" alt="">
+            <div class="rounded-circle overlay-dtl" id="habisProduct" >habis</div>
+           </div>
             <h4 id="productTitle" class="mt-2"></h4>
             <div class="d-flex"><p class="price" id="productPrice"></p>/<span class="text-muted" id="productStock"></span> </div>
             <div class="mb-2">Variant:</div>
@@ -584,7 +608,7 @@
                   </button>
                 </h2>
                 <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#detaileAdres">
-                  <div class="accordion-body">
+                  <div class="accordion-body p-0 m-2">
                       <!-- ==== -->
                       <div class="mb-3 d-flex">
                         <div class="me-1">
@@ -613,7 +637,7 @@
                 <div class="d-flex justify-content-center ps-2 mb-2 border border-secondary">
                   <i class="bi bi-box-fill text-secondary fs-5"></i>
                   <select class="form-select form-select-sm shadow-none border-0" id="detailMethodPengirimanPemesan" aria-label="Small select example">
-                    <option class="fw-bold" hidden>-- Pilih Metode Pengiriman -- :</option>
+                    <option class="fw-bold" hidden>--- Pilih Metode Pengiriman --- :</option>
                     <% web?.methodPengiriman?.forEach((method , index) => {%> 
                       <option value="<%= method.name %>"> <%= method.name %> </option>
                       <% }) %> 
@@ -626,7 +650,7 @@
               <div class="d-flex justify-content-center ps-2 mb-2 border border-secondary">
                 <i class="bi bi-wallet2 text-secondary fs-5"></i>
                 <select class="form-select form-select-sm shadow-none border-0" id="detailMethodPembayaranPemesan" aria-label="Small select example">
-                  <option class="fw-bold"  hidden>-- Metode Pembayaran --</option>
+                  <option class="fw-bold"  hidden>--- Metode Pembayaran ---</option>
                   <% web?.bankTransfer?.forEach((item, index) => { %>
                     <option value="<%= item.type %>" data-info="<%= item.noRekening %>">Transfer ( <%= item.type %> )</option>
                   <% }) %> 
@@ -636,8 +660,8 @@
             
             <!-- ==== -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-colorweb" onclick="addToCart()"><i class="bi bi-cart3 me-1"></i><i class="bi bi-plus"></i></button>
-                <button type="button" class="btn btn-colorweb"  onclick="sendWhatsApp()"><i class="bi bi-whatsapp me-2"></i>Buat Pesanan</button>
+                <button type="button" class="btn btn-colorweb" id="addCartBtnDetail" onclick="addToCart()"><i class="bi bi-cart3 me-1"></i><i class="bi bi-plus"></i></button>
+                <button type="button" class="btn btn-colorweb" id="sendWaDetail"  onclick="sendWhatsApp()"><i class="bi bi-whatsapp me-2"></i>Buat Pesanan</button>
             </div>
             <hr/>
             <div class="accordion" id="accordionPanelsStayOpenExample">
@@ -704,7 +728,7 @@
      let ds = document.getElementById('dashboard')
     
      if (token) {
-      ds.innerHTML = '<a class="nav-link" href="/dashboard"><i class="bi bi-pencil-square"></i></a>'
+      ds.innerHTML = '<a class="nav-link" href="/dashboard"><i class="bi bi-person-circle"></i>Admin</a>'
      }
     </script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -980,7 +1004,7 @@
     if (!localStorage.getItem('cartProducts')) {
       localStorage.setItem('cartProducts', JSON.stringify([]));
     }
-    
+        
       // Variabel untuk menyimpan data produk
       let productData = {}; // Inisialisasi sebagai objek kosong
       let selectedVariantPrice = 0; // Inisialisasi harga varian yang dipilih
@@ -1003,6 +1027,7 @@
          
     
           // Inisialisasi data produk ke dalam elemen HTML
+         
           document.getElementById('productImage').src = `https://drive.google.com/thumbnail?export=view&id=${productData.image}` ;
           document.getElementById('productTitle').innerText = productData.title;
           document.getElementById('productDescription').innerText = productData.description;
@@ -1025,6 +1050,7 @@
               if (index === 0) {
                   button.style.borderColor = "blue"; // Ganti dengan warna yang diinginkan
               }
+             
           });
     
           // Perbarui tampilan awal
@@ -1033,27 +1059,47 @@
     
       // Fungsi untuk memilih varian
       function selectVariant(variant, button) {
-          if (selectedVariant === variant) return;
-    
-          const buttons = document.querySelectorAll('#variantButtons button');
-          buttons.forEach(btn => {
-              btn.style.borderColor = ""; // Reset border color
-          });
-    
-          button.style.borderColor = "blue"; // Ganti dengan warna yang diinginkan
-          selectedVariant = variant; // Simpan varian yang dipilih
-          selectedVariantPrice = variant.price; // Update harga varian yang dipilih
-          selectedVariantStock = variant.stock; // Update stok varian yang dipilih
-    
-          count = 1; // Reset count ke 1 saat varian diubah
-          updateDisplay();
-      }
-    
+    const cartAdd = document.getElementById('addCartBtnDetail');
+    const sendWa = document.getElementById('sendWaDetail');
+
+    if (selectedVariant === variant) return;
+
+    // Nonaktifkan tombol jika stok 0
+   
+
+    const buttons = document.querySelectorAll('#variantButtons button');
+    buttons.forEach(btn => {
+        btn.style.borderColor = ""; // Reset border color
+    });
+
+    button.style.borderColor = "blue"; // Ganti dengan warna yang diinginkan
+    selectedVariant = variant; // Simpan varian yang dipilih
+    selectedVariantPrice = variant.price; // Update harga varian yang dipilih
+    selectedVariantStock = variant.stock; // Update stok varian yang dipilih
+  
+    count = 1; // Reset count ke 1 saat varian diubah
+    updateDisplay();
+}
       // Fungsi untuk memperbarui tampilan
       function updateDisplay() {
+        const cartAdd = document.getElementById('addCartBtnDetail');
+    const sendWa = document.getElementById('sendWaDetail');
+    const habis = document.getElementById('habisProduct');
           document.getElementById('countDisplay').value = count; // Perbarui tampilan count
-          document.getElementById('productPrice').innerText = `Rp${(selectedVariantPrice * count).toLocaleString()}`; // Perbarui harga total
+          document.getElementById('productPrice').innerText = `${formatRupiah(selectedVariantPrice * count)}`; // Perbarui harga total
           document.getElementById('productStock').innerText = `${selectedVariantStock.toLocaleString()}`; // Update stok
+          if (selectedVariantStock === 0) {
+        cartAdd.classList.add('disabled');
+        sendWa.classList.add('disabled');
+        habis.classList.remove('d-none');
+        
+    } else {
+        // Aktifkan kembali tombol jika stok lebih dari 0
+        cartAdd.classList.remove('disabled');
+        sendWa.classList.remove('disabled');
+        habis.classList.add('d-none');
+        
+    }
       }
     
       // Fungsi untuk menambah atau mengurangi count
@@ -1151,7 +1197,7 @@
       let bankTransfer = ''
       let bankRek= ''
       detailPengiriman.addEventListener("change", function() {
-        const selectedOption = selectElement.options[selectElement.selectedIndex]; // Mengambil opsi yang dipilih
+        const selectedOption = detailPengiriman.options[detailPengiriman.selectedIndex]; // Mengambil opsi yang dipilih
         const selectedValue = selectedOption.value; // Mengambil nilai yang dipilih
         pengiriman = selectedValue
          });

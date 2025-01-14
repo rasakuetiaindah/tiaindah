@@ -183,6 +183,8 @@
                             <div class="fw-bold">service 2</div>
                             <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="service2Label" placeholder="label" required>
                             <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="service2Title" placeholder="title" required>
+                            <input type="number" class="form-control form-control-sm border-custom rounded-0 mb-1" name="harga" placeholder="harga" >
+                            <input type="number" class="form-control form-control-sm border-custom rounded-0 mb-1" name="hargaCoret" placeholder="hargaCoret" >
                             <div class="form-floating mb-1">
                                 <textarea class="form-control border-custom" placeholder="about website" name="service2Description" id="service2Description" style=" height : 100px;"></textarea>
                                 <label class="text-muted" for="service2Description">Service 2 Website</label>
@@ -374,6 +376,9 @@
                                         <div class="fw-bold">service 2</div>
                                         <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="service2Label" placeholder="label" value="<%= websiteData?.website?.main?.service2?.label %>">
                                         <input type="text" class="form-control form-control-sm border-custom rounded-0 mb-1" name="service2Title" placeholder="title" value="<%= websiteData?.website?.main?.service2?.title %>">
+                                        <input type="number" class="form-control form-control-sm border-custom rounded-0 mb-1" name="harga" placeholder="harga" value="<%= websiteData?.website?.main?.service2?.harga %>">
+                                        <input type="number" class="form-control form-control-sm border-custom rounded-0 mb-1" name="hargaCoret" placeholder="hargaCoret" value="<%= websiteData?.website?.main?.service2?.hargaCoret %>">
+                     
                                         <div class="form-floating mb-1">
                                             <textarea class="form-control border-custom" placeholder="about website" name="service2Description" id="service2Description" style=" height : 100px;"><%= websiteData?.website?.main?.service2?.description%></textarea>
                                             <label class="text-muted" for="service2Description">Service 2 Website</label>

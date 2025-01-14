@@ -104,6 +104,8 @@ router.post('/', authUser,upload.fields([
           service2: {
             label: data.service2Label ?? '',
             title: data.service2Title ?? '',
+            harga: data.harga ?? '',
+            hargaCoret: data.hargaCoret ?? '',
             description: data.service2Description ?? '',
             image: service2ImageId
           },
@@ -233,6 +235,8 @@ router.post('/editweb',authUser, upload.fields([
           service2: {
             label: data.service2Label || website.main.service2.label,
             title: data.service2Title || website.main.service2.title,
+            harga: data.harga || website.main.service2.harga,
+            hargaCoret: data.hargaCoret || website.main.service2.hargaCoret,
             description: data.service2Description || website.main.service2.description,
             image: service2ImageId || website.main.service2.image
           },

@@ -97,7 +97,7 @@ router.post('/login', async (req, res, next) => {
 
 // Rute untuk mengatur ulang password
 router.post('/reset-password', async (req, res, next) => {
- 
+ const { email } = req.body
   try {
     // Ambil data pengguna dari Redis
     const user = await redisUser.get('user');
@@ -112,7 +112,7 @@ router.post('/reset-password', async (req, res, next) => {
     const resetLink = `${websiteUrl.website.footer.coppyRight}/reset-password?token=${resetToken}&email=${encodeURIComponent(email)}`;
 
     // Simpan token reset password di Redis dengan masa berlaku (misalnya 1 jam)
-    redisClient.setex(`reset-token:${resetToken}`, 3600, email); // 3600 detik = 1 jam
+    redisClient.set(`reset-token:${resetToken}`, 3600, email); // 3600 detik = 1 jam
 
     // Konfigurasi transporter untuk mengirim email
     const transporter = nodemailer.createTransport({
@@ -126,7 +126,7 @@ router.post('/reset-password', async (req, res, next) => {
     // Template email HTML
     const mailOptions = {
       from: process.env.EMAIL_WEB ,
-      to: user.email,
+      to: email,
       subject: 'Reset Password',
       html: `
         <div style="font-family: Arial, sans-serif; padding: 20px;">

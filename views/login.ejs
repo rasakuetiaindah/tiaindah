@@ -29,7 +29,7 @@
                 <input class="form-control" id="password" name="password" placeholder="Password" type="password" required/>
             </div>
              
-            <a class="d-block mb-3 text-decoration-none text-muted" href="#" onclick="sendEmail('<%= userEmail ? userEmail : null  %>')" >Forgot password</a>
+            <a class="d-block mb-3 text-decoration-none text-muted" href="#" onclick="sendEmail('<%= userEmail %>')" >Forgot password</a>
             <button class="btn btn-dark w-100 py-2" type="submit">Login</button>
             <div class="loading text-center mt-2">
                 <i class="fas fa-spinner fa-spin"></i> Loading...
@@ -97,7 +97,7 @@
             headers: { // Memindahkan 'headers' ke baris terpisah
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email }),
+            body: email ,
         });
 
         if (response.ok) {
