@@ -811,7 +811,7 @@
     const baseColor = '#000000'; // Warna dasar hitam
     const lightenedColor = lightenColor(baseColor, 100); // Mencerahkan warna dengan nilai 100
     
-    console.log(lightenedColor); // Output: #646464 (atau warna yang lebih cerah)
+  
     
         function colorWesite() {
           const service1 = document.querySelector('.service1')
@@ -1144,8 +1144,7 @@
     function addToCart() {
         // Ambil produk yang sudah ada di Local Storage
         let products = JSON.parse(localStorage.getItem('cartProducts')) || [];
-        console.log('dari get add cart', products);
-    
+  
         // Buat objek produk yang akan ditambahkan
         const productToAdd = {
             id : generateCustomId(),
@@ -1160,7 +1159,7 @@
     
         // Tambahkan produk baru ke array produk
         products.push(productToAdd);
-        console.log('dari get add cartssss', products);
+ 
     
         // Simpan kembali ke Local Storage
         localStorage.setItem('cartProducts', JSON.stringify(products));
@@ -1257,7 +1256,6 @@
         const totalPesanan = document.getElementById('totalPesanan')
         const totalSatuan = document.getElementById('totalSatuan')
         const totalBayar = document.getElementById('totalBayar')
-    console.log('cart', products)
     
         cartContainer.innerHTML = ''; // Kosongkan kontainer
          if(products.length === 0) {
@@ -1461,7 +1459,6 @@
           const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
           window.open(whatsappUrl, '_blank');
       }
-    console.log('website', parseWeb)
     
     
     // Fungsi untuk mengupdate jumlah produk

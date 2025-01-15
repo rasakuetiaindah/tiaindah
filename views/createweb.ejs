@@ -50,7 +50,9 @@
 </head>
 <body class="container mt-3 d-flex justify-content-center">
    <div style="max-width: 526px;">
-    <div class="container d-flex">
+    <a class="mt-3 mb-3" href="/"><i class="bi bi-arrow-90deg-left"></i> back to home</a>
+    <div class="container mt-3 d-flex">
+        
        <% if (!websiteData) { %>
         <div>
             <p class="text-warning bg-secondary">Silahkan Buat Website anda Terlebih dahulu !</p>
@@ -68,7 +70,7 @@
               <button type="button" class="btn btn-outline-danger rounded-0 me-1" data-bs-toggle="modal" data-bs-target="#productsadd">
                 Add New Product <i class="bi bi-plus-lg"></i>
               </button>
-              <button type="button" class="btn btn-outline-danger rounded-0 me-1" data-bs-toggle="modal" data-bs-target="#akunseting">
+              <button type="button" class="btn btn-outline-danger rounded-0 me-1" data-bs-toggle="modal" data-bs-target="#userEdit">
                 Akun <i class="bi bi-gear"></i>
               </button>
             <% } %> 
@@ -758,45 +760,85 @@
           </div>
           <hr style="border-top: 2px solid #000; border-bottom: none; border-left: none; border-right: none;">
 
+        <!-- EDIT USER ADMIN -->
+        <% if(!websiteData){%>
+            <div></div>
+          <%} else  {%>
+            <div class="modal fade" id="userEdit" tabindex="-1" aria-labelledby="userEdit-Label" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header p-1 ps-2 pe-2"  >
+                        <h5 class="modal-title fs-6 " id="userEdit-Label">Edit User Admin</h5>
+                        <button type="button" class="btn btn-sm border-danger bg-trasparant rounded-0"  data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg text-danger"></i></button>
+                      </div>
+                      <div class="modal-body d-flex justify-content-center">
+                        <form class="form-submit" data-url="" id="fromEdit"  enctype="multipart/form-data"  style="max-width: 726px;">
+                            <div class="user mb-4">
+                                <h3>Edit Detail User</h3>
+                                <div class="userContainer">
+                                    <div class="productItem mb-3">
+                                        <label for="user-nm" class="form-label">Username:</label>
+                                        <input type="text" class="form-control form-control-sm border-custom rounded-0 m-0 mb-1" name="username" placeholder="username" id="user-nm" >
+                                        
+                                        <label for="user-em" class="form-label">email:</label>
+                                        <input type="email" class="form-control form-control-sm border-custom rounded-0 m-0 mb-1" name="email" placeholder="email" id="user-em" >
 
+                                        
+                                        <label for="user-pwd" class="form-label">password:</label>
+                                        <input type="password" class="form-control form-control-sm border-custom rounded-0 m-0 mb-1" name="password" placeholder="pasword" id="user-pwd" >
+                                
+                                    </div>
+                                </div>
+                             </div>
+                            <div  class="mb-3 " id="responseMessage"></div>
+                            <button type="submit" class="btn btn-primary rounded-0">Edit User</button>
+                        </form>
+                    </div>
+                    </div>
+                  </div>
+              </div>
+          <% } %>   
+       <!-- ========END USER ADMIN============== -->
               <% if(!websiteData){%>
                 <div></div>
                 <% }else{ %>
-                    <table id="bankList" class="tabel-parent " >
-                        <thead>
-                            <tr >
-                                <th class="tabel-head">Logo</th>
-                                <th class="tabel-head">no-rek</th>
-                                <th class="tabel-head">type</th>
-                                <th  class="tabel-head">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% if (!websiteData || !websiteData?.website?.bankTransfer| websiteData?.website?.bankTransfer?.length === 0) { %>
-                                <tr>
-                                    <td colspan="3"></td>
+                    <div class="container">
+                        <table id="bankList" class="tabel-parent " >
+                            <thead>
+                                <tr >
+                                    <th class="tabel-head">Logo</th>
+                                    <th class="tabel-head">no-rek</th>
+                                    <th class="tabel-head">type</th>
+                                    <th  class="tabel-head">Action</th>
                                 </tr>
-                            <% } else { %>
-                                <% websiteData?.website?.bankTransfer?.forEach((bank, index) => { %>
-                                    <tr class="tabel-row" >
-                                        <td class="text-center" ><img src="https://drive.google.com/thumbnail?export=view&id=<%= bank.logo %>" alt="<%= bank.type %>" style="width: 30px; height: auto;"></td>
-                                        <td ><%= bank.type %></td>
-                                        <td ><%= bank.noRekening %></td>
-                                        <td class="text-center" >
-                                            <div class="d-flex justify-content-center">
-                                                <button class="btn btn-sm  p-2 pt-1 pb-1 border-1 border-primary me-1" onclick="showBankEdit('<%= bank.type %>', '<%= bank.type %>' ,'<%= bank.logo %>')" data-bs-toggle="modal" data-bs-target="#bankEdit"  ><i class="bi bi-pencil-fill text-primary"></i></button>
-                                                <form class="form-delete " data-delete="/delete-bank/<%=bank.logo%>">
-                                                    <button type="submit" class=" btn btn-sm p-2 pt-1 pb-1 border-1 border-danger" ><i class="bi bi-trash3-fill text-danger"></i></button>
-                                                </form>
-                                            </div>
-                                        </td>
+                            </thead>
+                            <tbody>
+                                <% if (!websiteData || !websiteData?.website?.bankTransfer| websiteData?.website?.bankTransfer?.length === 0) { %>
+                                    <tr>
+                                        <td colspan="3"></td>
                                     </tr>
-                                <% }) %>
-                            <% } %>
-                        </tbody>
-                    </table>
-                    <% } %> 
+                                <% } else { %>
+                                    <% websiteData?.website?.bankTransfer?.forEach((bank, index) => { %>
+                                        <tr class="tabel-row" >
+                                            <td class="text-center" ><img src="https://drive.google.com/thumbnail?export=view&id=<%= bank.logo %>" alt="<%= bank.type %>" style="width: 30px; height: auto;"></td>
+                                            <td ><%= bank.type %></td>
+                                            <td ><%= bank.noRekening %></td>
+                                            <td class="text-center" >
+                                                <div class="d-flex justify-content-center">
+                                                    <button class="btn btn-sm  p-2 pt-1 pb-1 border-1 border-primary me-1" onclick="showBankEdit('<%= bank.type %>', '<%= bank.noRekening %>' ,'<%= bank.logo %>')" data-bs-toggle="modal" data-bs-target="#bankEdit"  ><i class="bi bi-pencil-fill text-primary"></i></button>
+                                                    <form class="form-delete " data-delete="/delete-bank/<%=bank.logo%>">
+                                                        <button type="submit" class=" btn btn-sm p-2 pt-1 pb-1 border-1 border-danger" ><i class="bi bi-trash3-fill text-danger"></i></button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
 
+                    <% } %> 
 
    </div>
 
@@ -1339,7 +1381,7 @@ document.addEventListener('submit', function(event) {
             responseMessage.style.zIndex = '1000';
 
             // Mengembalikan teks tombol ke semula
-            submitButton.textContent = 'Submit';
+            submitButton.textContent = 'gagal!';
             submitButton.disabled = false; // Mengaktifkan kembali tombol
 
             // Menghilangkan alert setelah 3 detik
